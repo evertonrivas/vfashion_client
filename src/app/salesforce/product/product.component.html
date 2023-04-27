@@ -1,0 +1,65 @@
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row p-3">
+        <div class="col-md-3 border-end">
+          <div id="carouselOrder" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active" *ngFor="let img of selectedProduct.images" data-bs-interval="1000">
+                <img [src]="img.img_url" class="w-100 d-block" loading="lazy">
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="'#carouselOrder" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="'#carouselOrder" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col">REF: {{selectedProduct.refCode}}</div>
+          </div>
+          <div class="row pt-2">
+            <div class="col">Preço Unitário: {{selectedProduct.price | currency}}</div>
+          </div>
+          <div class="row pt-2">
+            <div class="col"><a href="#" class="link-dark nav-link"><span class="material-symbols-outlined align-middle">&#xe41c;</span> Tabela de Medidas</a></div>
+          </div>
+          <div class="row">
+            <div class="col text-center"><h5>Tamanhos e cores disponíveis</h5></div>
+          </div>
+          <div>
+            <div class="row">
+              <div class="col">Cor</div>
+              <div class="col text-center" *ngFor="let key of sizeKeys">{{key | uppercase}}</div>
+              <div class="col">Total</div>
+            </div>
+          <div *ngFor="let color of selectedProductStock; let i = index;">
+              <div class="row mt-2">
+                  <div class="col">
+                  <div class="d-flex align-items-center">
+                      <span class="px-2 py-2 rounded-1 border" [ngStyle]="{'background-color': color.color_hexa}"></span>&nbsp;{{color.color_name}}
+                  </div> 
+                  </div>
+                  <div class="col" *ngFor="let size of color.sizes;let j = index;">
+                  <input type="number" class="form-control form-control-sm" [(ngModel)]="grid[selectedProduct.id][color.color_code][size.size_code]" min="0" [max]="size.size_value" (change)="changeAndSum()" [disabled]="size.size_value==null?true:false">
+                  </div>
+                  <div class="col text-center">{{subTotal[selectedProduct.id][color.color_code]}}</div>
+              </div>
+              <div class="row">
+              <div class="col">&nbsp;</div>
+              <div class="col text-center" *ngFor="let size of color.sizes"><label class="labels">Estoque: {{size.size_value==null?'-':size.size_value}}</label></div>
+              <div class="col text-center">&nbsp;</div>
+              </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    <div class="row p-3">
+        <div class="col-md-12 justify-content-end text-end">
+            <button type="button" class="btn btn-success btn-sm" (click)="addToPreOrder()"> Atualizar Pedido</button>
+        </div>
+    </div>
+</div>

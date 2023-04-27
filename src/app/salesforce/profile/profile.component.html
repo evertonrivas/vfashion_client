@@ -1,0 +1,99 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="frmProfile">
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-end">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://github.com/evertonrivas.png"><span class="font-weight-bold">{{myProfile.name}}</span><span class="text-black-50">{{myProfile.email}}</span><span> </span></div>
+            </div>
+            <div class="col-md-9">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Perfil da Conta</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <label for="floatingName" class="labels">Nome ou Razão Social</label>
+                            <input type="text" class="form-control" id="floatingName" placeholder="Nome/Razão Social" formControlName="txtName">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <label for="floatingEmail" class="labels">E-mail</label>
+                            <input type="email" class="form-control" id="floatingEmail" placeholder="E-mail" formControlName="txtEmail">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <label for="floatingInsta" class="labels">Instagram</label>
+                            <div class="input-group">
+                                <span class="input-group-text">https://instagram.com/</span>
+                                <input type="text" class="form-control" id="floatingInsta" placeholder="username" formControlName="txtInstagram">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-9">
+                            <label for="floatingTaxvat" class="labels">CPF ou CNPJ</label>
+                            <input type="text" class="form-control" mask="000.000.000-00||00.000.000/0000-00" placeholder="CPF ou CNPJ" id="floatingTaxvat" formControlName="txtTaxvat">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="floatingPhone" class="labels">Telefone</label>
+                            <input type="tel" class="form-control" id="floatingPhone" mask="(00) 0000-0000||(00) 0 0000-0000" placeholder="Telefone" formControlName="txtPhone">
+                        </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                        <div class="col-md-3">
+                            <label for="floatingPostal" class="labels">CEP</label>
+                            <input type="text" class="form-control" id="floatingPostal" mask="00000-000" placeholder="CEP" formControlName="txtPostalCode">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="floatingSate" class="labels">UF</label>
+                            <select class="form-control" id="floatingSate" formControlName="slUF">
+                                <option selected>Selecione...</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="floatingCity" class="labels">Cidade</label>
+                            <input type="text" class="form-control" formControlName="txtCity" id="floatingCity" placeholder="Cidade">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="floatingNeighborhood" class="labels">Bairro</label>
+                            <input type="text" class="form-control" formControlName="txtNeighborhood" id="floatingNeighborhood" placeholder="Bairro">
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2 d-flex flex-row-reverse gap-2">
+                        <button class="btn btn-sm btn-primary" type="submit" [disabled]="frmProfile.invalid"><fa-icon [icon]="faSave"></fa-icon> Salvar</button>
+                        <a class="btn btn-secondary btn-sm" [routerLink]="['/shopkeeper/gallery']"><fa-icon [icon]="faRotateLeft"></fa-icon> Voltar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br>

@@ -1,0 +1,87 @@
+    <div class="mt-2" *ngIf="itBrandData.length > 0">
+        <h6>Marca</h6>
+        <ng-select [multiple]="true"
+            [items]="itBrandData"
+            [closeOnSelect]="false"
+            bindLabel="name"
+            bindValue="id"
+            [searchable]="false"
+            [placeholder]="'Selecione...'">
+        </ng-select>
+    </div>
+
+    <div class="mt-2" *ngIf="itCollectionData.length > 0">
+        <h6>Cole&ccedil;&atilde;o</h6>
+        <ng-select [multiple]="true"
+            [items]="itCollectionData"
+            [closeOnSelect]="false"
+            bindLabel="name"
+            bindValue="id"
+            [(ngModel)]="selectedCollection">
+        </ng-select>
+    </div>
+
+    <div class="mt-2" *ngIf="itCategoryData.length > 0">
+        <h6>Categoria/Coordenado</h6>
+        <ng-select [multiple]="true"
+            [items]="itCategoryData"
+            [closeOnSelect]="false"
+            bindLabel="name"
+            bindValue="id"
+            [(ngModel)]="selectedCategory">
+        </ng-select>
+    </div>
+
+    <div class="mt-2" *ngIf="itModelData.length > 0">
+        <h6>Modelo/Linha</h6>
+        <ng-select [multiple]="true"
+            [items]="itModelData"
+            [closeOnSelect]="false"
+            bindLabel="name"
+            bindValue="id"
+            [(ngModel)]="selectedModel">
+        </ng-select>
+    </div>
+
+    <div class="mt-2" *ngIf="itTypeData.length > 0">
+        <h6>Tipo</h6>
+        <ng-select [multiple]="true"
+            [items]="itTypeData"
+            [closeOnSelect]="false"
+            bindLabel="name"
+            bindValue="id"
+            [(ngModel)]="selectedType">
+        </ng-select>
+    </div>
+
+    <div class="mt-2" *ngIf="itSizeData.length > 0">
+        <h6>Tamanho</h6>
+        <ng-select [multiple]="true"
+            [items]="itSizeData"
+            [closeOnSelect]="false"
+            bindLabel="size_name"
+            bindValue="id"
+            [(ngModel)]="selectedSizes">
+        </ng-select>
+    </div>
+
+    <div class="mt-2" *ngIf="itColorData.length > 0">
+        <h6>Cor</h6>
+        <ng-select [multiple]="true"
+            [items]="itColorData"
+            [closeOnSelect]="false"
+            bindLabel="name"
+            bindValue="id"
+            [(ngModel)]="selectedColors">
+            <ng-template ng-option-tmp let-item="item">
+                <div class="d-flex align-items-center">
+                    <span class="px-2 py-2 rounded-1 border" [ngStyle]="{'background-color': item.hexcode}"></span>&nbsp;{{item.name}}
+                </div>
+            </ng-template>
+        </ng-select>
+    </div>
+    <div class="mt-2">
+        <button class="w-100 btn btn-sm btn-primary" type="submit" (click)="setFilter()">
+            <fa-icon [icon]="faFilter"></fa-icon> Filtrar
+        </button>
+    </div>

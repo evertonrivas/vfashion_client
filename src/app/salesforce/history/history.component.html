@@ -1,0 +1,60 @@
+<div class="rounded bg-white mt-5 mb-5" [class]="showIntegration?'container-fluid':'container'">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>N&deg; do Pedido</th>
+                    <th class="text-end">Realizado em </th>
+                    <th class="text-end">Itens</th>
+                    <th class="text-end">N&deg; de Parcelas</th>
+                    <th class="text-end">Valor Parcela</th>
+                    <th class="text-end">Valor Total</th>
+                    <th class="text-center" *ngIf="showIntegration">Integrado</th>
+                    <th class="text-end" *ngIf="showIntegration">N&deg; NF</th>
+                    <th class="text-end" *ngIf="showIntegration">Rastrear</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let history of myHistory.data">
+                    <th>{{history.id_order}}</th>
+                    <td class="text-end">{{history.date_created}}</td>
+                    <td class="text-end">{{history.total_itens}}</td>
+                    <td class="text-end">{{history.installments}}</td>
+                    <td class="text-end">{{history.installment_value | currency}}</td>
+                    <td class="text-end">{{history.total_value | currency}}</td>
+                    <td class="text-center" *ngIf="showIntegration"><span class="badge" [class]="history.integrated?'text-bg-info':'text-bg-secondary'">{{history.integrated==true?"Sim":'Não'}}</span></td>
+                    <td class="text-end" *ngIf="showIntegration">{{history.invoice_number}}</td>
+                    <td class="text-end" *ngIf="showIntegration"><a href="javascript:void(0)" (click)="showTrack(history.id_order)">{{history.integration_number}}</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="pagination p1 justify-content-center">
+                <ul>
+                  <a href="javascript:void(0);" [ngClass]="{'disabled': myHistory.paginate.page === 1}" (click)="prev()"><li>&laquo;</li></a>
+                  <a href="javascript:void(0);" *ngFor="let number of numbers" [ngClass]="{ 'is-active': options.page === number }" (click)="to(number)"><li>{{number}}</li></a>
+                  <a href="javascript:void(0);" [ngClass]="{'disabled': myHistory.paginate.pages===myHistory.paginate.page}" (click)="next()"><li>&raquo;</li></a>
+                </ul>
+              </div>
+        </div>
+      </div>
+</div>
+
+<div class="modal fade" id="modal_shipping" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><fa-icon [icon]="faDolly"></fa-icon> Rastreamento de Pedido</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{selectedTrack}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>

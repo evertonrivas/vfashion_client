@@ -1,0 +1,80 @@
+<div class="py-3 fixed-top bg-white border-bottom">
+  <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
+    <div class="navbar justify-content-start">
+      <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight">
+        <span class="navbar-toggler-icon"></span>
+      </button>&nbsp;
+      <a href="javascript:void(0)" [routerLink]="['/salesforce/gallery']"><img [src]="'/assets/'+company_logo"></a>
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+      <form class="w-100 me-3" role="search" (submit)="onSubmit()">
+        <div class="input-group">
+          <input type="search" class="form-control" [(ngModel)]="txtSearch" [ngModelOptions]="{standalone: true}" placeholder="Buscar por: Nome, EAN, REF, Marca, Categoria/Coordenado, Tipo ou Cor" title="Buscar por: Nome, EAN, REF, Marca, Categoria/Coordenado, Tipo ou Cor" aria-label="Search">
+            <button class="btn input-search" type="submit">
+              <span class="material-symbols-outlined align-middle">&#xe8b6;</span>
+            </button>
+        </div>
+      </form>
+
+      <a href="#" [routerLink]="['/salesforce/help']" class="nav-link"><span class="material-symbols-outlined">&#xe887;</span></a>
+      <a data-bs-toggle="offcanvas" href="#offcanvasCartLight" class="nav-link position-relative"><span class="material-symbols-outlined">&#xe8cc;</span> <span class="position-absolute bottom-10 start-100 translate-middle badge rounded-pill bg-danger">{{totalInCart}}</span></a>
+      <div class="flex-shrink-0 dropdown">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/evertonrivas.png" alt="Everton Rivas" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+          <li><a class="dropdown-item" [routerLink]="['/salesforce/profile']"><span class="material-symbols-outlined align-middle">&#xe853;</span> Perfil</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/salesforce/history']"><span class="material-symbols-outlined align-middle">&#xec09;</span> Histórico de Compras</a></li>
+          <!--<li><a class="dropdown-item" [routerLink]="['/salesforce/suggestion']"><span class="material-symbols-outlined align-middle">&#xf0c5;</span> Sugestão de pedido</a></li>-->
+          <!--<li><a class="dropdown-item" [routerLink]="['/salesforce/catalog']"><span class="material-symbols-outlined align-middle">&#xe411;</span> Catálogo de Fotos</a></li>-->
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" [routerLink]="['/salesforce/return']"><span class="material-symbols-outlined align-middle">&#xe860;</span> Devolução</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/salesforce/return']"><span class="material-symbols-outlined align-middle">&#xe889;</span> Histórico de Devolução</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a href="javascript:void(0);" class="dropdown-item" (click)="logout()"><span class="material-symbols-outlined">&#xe9ba;</span> Sair</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Offcanvas dos filtros-->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbarLight" aria-labelledby="offcanvasNavbarLightLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">Filtros</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <app-filter (filteredEvent)="doFilter()"></app-filter>
+  </div>
+</div>
+
+<!--Offcanvas do resumo de pedido-->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCartLight" aria-labelledby="offcanvasCartLighttLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasCartLightLabel">Resumo do Pedido</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <app-cart></app-cart>
+  </div>
+</div>
+
+
+<div class="body">
+  <router-outlet></router-outlet>
+</div>
+<footer class="bg-dark mt-3 ps-5 pe-5 pt-4 text-white navbar-fixed-bottom">
+  <div class="row">
+    <div class="col-md-11 text-start"></div>
+    <div class="col-md-1 text-end">
+      <a [href]="sys_config.company.instagram" class="text-white" target="_blank" *ngIf="sys_config.company.instagram!=''"><fa-icon [icon]="faInstagram"></fa-icon></a>&nbsp;
+      <a [href]="sys_config.company.facebook" class="text-white" target="_blank" *ngIf="sys_config.company.facebook!=''"><fa-icon [icon]="faFacebook"></fa-icon></a>&nbsp;
+      <a [href]="sys_config.company.linkedin" class="text-white" target="_blank" *ngIf="sys_config.company.linkedin!=''"><fa-icon [icon]="faLinkedin"></fa-icon></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md text-center" style="font-size:11px!important;">&copy; Venda Fashion - 2023</div>
+  </div>
+</footer>

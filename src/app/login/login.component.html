@@ -1,0 +1,24 @@
+<br/>
+<div class="text-center"><img [src]="'/assets/'+company_logo" style="max-width: 330px;"></div>
+<main class="form-signin w-100 m-auto text-center">
+    <form (ngSubmit)="onSubmit()" [formGroup]="frmLogin">
+        <h1 class="h3 mb-3 fw-normal text-center">Acesso ao sistema</h1>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Usuário" formControlName="txtUsername" required>
+            <label for="floatingInput">Usuário</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Senha de acesso" formControlName="txtPassword" required>
+            <label for="floatingPassword">Senha de acesso</label>
+        </div>
+        <div class="form-check mb-3 form-switch">
+        <label>
+            <input type="checkbox" value="remember-me" formControlName="chkRemember" role="switch" class="form-check-input"> Lembrar credenciais
+        </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="frmLogin.invalid || loading"><fa-icon [icon]="faRightToBracket"></fa-icon> Acessar</button>
+        <p class="text-center mt-2 mb-3"><a href="#">Esqueci minha senha</a></p>
+        <p class="mt-5 mb-3 text-muted text-center">&copy; Venda Fashion - 2023</p>
+    </form>
+</main>

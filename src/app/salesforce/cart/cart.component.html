@@ -1,0 +1,22 @@
+<div class="row">
+    <ul class="list-group mb-3 pe-3 ps-3">
+        <li class="list-group-item d-flex justify-content-between lh-sm" *ngFor="let product of content;">
+          <div>
+            <h6 class="my-0">{{product.name}}</h6>
+            <small class="text-muted"><strong>{{product.itens}} itens</strong> X R$ UN {{product.price_un}}</small>
+          </div>
+          <span class="text-muted">R$ {{product.total_price| currency}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between 1h-sm text-bg-light">
+            <div>
+                <h6 class="my-0">Total <span class="badge text-bg-warning">{{myItens}} itens</span></h6>
+            </div>
+            <small class="text-muted text-end">R$ {{myTotal | currency}}</small>
+        </li>
+    </ul>
+</div>
+<div class="mt-2">
+  <button [class]="myItens==0?'disabled':''" class="w-100 btn btn-danger" type="submit" data-bs-dismiss="offcanvas" [routerLink]="['/shopkeeper/checkout']">
+      Revisar e Finalizar Pedido <fa-icon [icon]="faTruckArrowRight"></fa-icon>
+  </button>
+</div>
