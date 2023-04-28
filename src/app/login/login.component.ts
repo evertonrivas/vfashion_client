@@ -83,10 +83,11 @@ export class LoginComponent implements OnInit{
           localStorage.setItem('id_user',String(this.app_token.id_user));
           localStorage.setItem('id_profile',String(this.app_token.id_profile));
           localStorage.setItem('token_expire',this.app_token.token_expire);
+          localStorage.setItem("level_access",String(this.app_token.level_access));
           switch(this.app_token.level_access){
-            case "A": this.route.navigate(["/shopkeeper"]); break;
-            case "L": this.route.navigate(["/shopkeeper"]); break;
-            case "R": this.route.navigate(["/representative"]); break;
+            case "A": this.route.navigate(["/selector"]); break;
+            case "L": this.route.navigate(["/salesforce"]); break;
+            case "R": this.route.navigate(["/selector"]); break;
           }
           //this.loading = false;
         },
