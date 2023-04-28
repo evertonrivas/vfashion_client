@@ -1,4 +1,4 @@
-import { Component,ChangeDetectorRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component,ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -58,7 +58,11 @@ export class SalesforceComponent implements OnDestroy, OnInit{
     this.idTimer = <any>setInterval(() =>{
       this.checkLogged();
     },30000);//verifica a cada 30 segundos
-    this.myRoute.navigate(["/shopkeeper/gallery"]);
+    if (localStorage.getItem("level_access")=="R"){
+      this.myRoute.navigate(["/salesforce/representative"]);
+    }else{
+      this.myRoute.navigate(["/salesforce/gallery"]);
+    }
     
     this.countOnCart();
   }
@@ -70,10 +74,6 @@ export class SalesforceComponent implements OnDestroy, OnInit{
         this.totalInCart = data;
       }
     });
-  }
-
-  goProfile():void{
-    this.myRoute.navigate(["/profile"]);
   }
 
   onSubmit():void{
