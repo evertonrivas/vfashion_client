@@ -3,6 +3,20 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import 'ngx-toastr/toastr';
 
+:root{
+    --header-height: 3rem;
+    --nav-width: 68px;
+    --first-color: #4723D9;
+    --first-color-light: rgba(255, 255, 255, 0.55);
+    --white-color: #F7F6FB;
+    --body-font: 'Nunito', sans-serif;
+    --normal-font-size: 1rem;--z-fixed: 100
+}*,
+::before,
+::after{
+    box-sizing: border-box
+}
+
 html, body { height: 100%; }
 body { 
     /*display: flex;
