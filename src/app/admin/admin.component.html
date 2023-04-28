@@ -1,0 +1,74 @@
+<body id="body-pd">
+  <header class="header d-flex display-content-end" id="header">
+      <div class="header_toggle">&nbsp;</div>
+      <div class="flex-shrink-0 dropdown" style="max-width: 40px!important;">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/evertonrivas.png" alt="Everton Rivas" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+          <li><a class="dropdown-item" [routerLink]="['/admin/profile']"><span class="material-symbols-outlined align-middle">&#xe853;</span> Perfil</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/selector']"><span class="material-symbols-outlined align-middle">deployed_code</span> Trocar módulo</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a href="javascript:void(0);" class="dropdown-item" (click)="logout()"><span class="material-symbols-outlined">&#xe9ba;</span> Sair</a></li>
+        </ul>
+      </div>
+  </header>
+  <div class="l-navbar bg-dark text-bg-dark" id="nav-bar">
+      <nav class="nav">
+          <div class="overflow-auto">
+            <div class="custom-menu">
+              <a type="button" class="text-bg-dark" id="sidebarCollapse" (click)="toggleMenu()"><span class="material-symbols-outlined">{{icone}}</span></a>
+            </div>
+            <a class="nav_logo nav_logo-icon">
+              <span class="material-symbols-outlined align-middle">&#xe53b;</span>
+                <span class="nav_logo-name">VFashion</span> 
+            </a>
+            <div class="nav_list">
+
+              <ul class="list-unstyled mb-5 p-1">
+                <li>
+                  <a href="javascript:void(0);" [routerLinkActive]="['active']" [routerLink]="['/admin']" class="nav_link"> <span class="material-symbols-outlined align-middle">&#xe871;</span>Dashboard </a> 
+                </li>
+                <li>
+                  <a href="#subMenuCrm" data-bs-toggle="collapse" class="nav_link"> <span class="material-symbols-outlined align-middle">&#xebcb;</span> CRM </a>
+                  <ul class="list-unstyled collapse ms-4" id="subMenuCrm">
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">filter_alt</span> Funis</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">toggle_on</span> Campos</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">badge</span> Permissões</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">hub</span> Integrações</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#subMenuB2b" data-bs-toggle="collapse" class="nav_link"><span class="material-symbols-outlined">&#xe73a;</span> B2B</a>
+                  <ul class="list-unstyled collapse ms-4" id="subMenuB2b">
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">view_module</span> Grades</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">inventory_2</span> Produtos</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">category</span> Cat/Coord</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">styler</span> Modelos</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">checklist</span> Tipos</a></li>
+                    <li><hr size="1" style="padding-left: 5px; padding-right: 5px;" class="ms-4"></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">sell</span>Tab. de Preços</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">payments</span>Comissões</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">privacy_tip</span> Permissões</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="javascript:void(0);" [routerLinkActive]="['active']" [routerLink]="['/admin/fpr']" class="nav_link"> <span class="material-symbols-outlined align-middle">&#xe179;</span> FPR </a> 
+                </li>
+                <li>
+                  <a href="#subMenuSystem" data-bs-toggle="collapse" class="nav_link overflow-auto"><span class="material-symbols-outlined">settings_suggest</span> Sistema</a>
+                  <ul class="list-unstyled collapse ms-4" id="subMenuSystem">
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">group</span>Usuários</a></li>
+                    <li><a href="javascript:void(0);" class="nav_link"><span class="material-symbols-outlined">domain_disabled</span>Entidades</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+      </nav>
+  </div>
+  <!--Container Main start-->
+  <div class="height-100 bg-light">
+      <router-outlet></router-outlet>
+  </div>
+  <!--Container Main end-->
