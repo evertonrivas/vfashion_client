@@ -93,7 +93,7 @@ export class ProfileComponent implements OnInit {
         if ((data as boolean)==true){
           this.toastr.success('Registro salvo com sucesso!','Alerta!').onHidden.subscribe({
             next: data =>{
-              this.route.navigate(["/shopkeeper/gallery"]);
+              this.route.navigate(["/salesforce/gallery"]);
             }
           });
         }

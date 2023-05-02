@@ -101,7 +101,7 @@ export class FilterComponent implements OnInit {
     this.myfilter.colors      = this.selectedColors;
     this.myfilter.sizes       = this.selectedSizes;
 
-    this.route.navigate(["/shopkeeper/gallery"]).finally(() =>{
+    this.route.navigate(["/salesforce/gallery"]).finally(() =>{
       this.filteredEvent.emit();
       this.svcFilter.announceFilter(this.myfilter);
     });

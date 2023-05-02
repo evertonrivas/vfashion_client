@@ -82,7 +82,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
             enableHtml:true
           }).onHidden.subscribe(()=>{
             this.sOrder.annouceProduct();
-            this.router.navigate(['/shopkeeper/gallery']);
+            this.router.navigate(['/salesforce/gallery']);
           });
         }else{
           this.tostr.error('Ocorreu um erro ao realizar o pedido, por favor entre em contato com o Suporte!');

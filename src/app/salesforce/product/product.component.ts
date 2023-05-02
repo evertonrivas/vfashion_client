@@ -195,7 +195,7 @@ export class ProductComponent implements OnInit{
         if (result==true){
           this.sOrder.annouceProduct();
           this.msg.success('Produto atualizado com sucesso!').onHidden.subscribe(() =>{
-            this.route.navigate(['/shopkeeper/checkout']);
+            this.route.navigate(['/salesforce/checkout']);
           });
         }else{
           this.msg.error('Ocorreu uma falha ao atualizar os dados do produto!');
