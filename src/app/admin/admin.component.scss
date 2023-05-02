@@ -93,10 +93,10 @@ a{
 .body-pd{
     padding-left: calc(var(--nav-width) + 1rem)
 }
-.active{
+.router-link-active{
     color: var(--white-color)
 }
-.active::before{
+.router-link-active::before{
     content: '';
     position: absolute;
     left: 0;
@@ -154,4 +154,8 @@ a{
     width: 24px;
     height: 24px;
     border-radius: 50%;
+}
+.divider-menu{
+    padding-left: 5px; 
+    padding-right: 5px;
 }

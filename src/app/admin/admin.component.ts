@@ -1,6 +1,7 @@
 import { Component,OnInit,OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -15,7 +16,7 @@ export class AdminComponent implements OnInit,OnDestroy{
   protected txtSearch:string = "";
   private idTimer = 0;
 
-  constructor(private auth:AuthService){
+  constructor(private auth:AuthService,private myRoute:Router){
 
   }
 
@@ -28,6 +29,8 @@ export class AdminComponent implements OnInit,OnDestroy{
     this.idTimer = <any>setInterval(() =>{
       this.checkLogged();
     },30000);//verifica a cada 30 segundos
+
+    this.myRoute.navigate(['/admin/dashboard']);
   }
 
   checkLogged():void{
