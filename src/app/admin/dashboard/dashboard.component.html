@@ -1,1 +1,76 @@
-<p>dashboard works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow-sm">
+                <!--<div class="card-header text-center">
+                    Valor em Pedidos
+                </div>-->
+                <div class="card-body text-center">
+                    <div class="d-flex justify-content-start">
+                        <span class="material-symbols-outlined text-primary">finance_chip</span>&nbsp;
+                        <h5>Valor em Pedidos</h5>
+                    </div>                    
+                    <h1>{{totalValueOrder}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <div class="d-flex justify-content-start">
+                        <span class="material-symbols-outlined text-primary">order_approve</span>&nbsp;
+                        <h5>N&uacute;mero de Pedidos</h5>
+                    </div>
+                    
+                    <h1>{{totalOrder}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <div class="d-flex justify-content-start">
+                        <span class="material-symbols-outlined text-primary">store</span>&nbsp;
+                        <h5>N&deg; de Clientes</h5>
+                    </div>
+                    <h1>{{totalCustomer}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <div class="d-flex justify-content-start">
+                        <span class="material-symbols-outlined text-primary">apartment</span>&nbsp;
+                        <h5>N&deg; de Representantes</h5>
+                    </div>                    
+                    <h1>{{totalRepresentative}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <div class="d-flex justify-content-start">
+                        <span class="material-symbols-outlined text-primary">local_mall</span>&nbsp;
+                        <h5>Pedidos por Representante</h5>
+                    </div>                    
+                    <div echarts [options]="options" class="demo-chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-start">
+                        <span class="material-symbols-outlined text-primary">calendar_month</span>&nbsp;
+                        <h5>Calendário de Vendas</h5>
+                    </div>
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
