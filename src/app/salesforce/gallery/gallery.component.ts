@@ -20,6 +20,7 @@ export class GalleryComponent implements OnDestroy, OnInit{
   getGallerySub:Subscription = new Subscription;
   getStockSub:Subscription   = new Subscription;
   setOrderSub:Subscription   = new Subscription;
+  hasSended:boolean = false;
 
   //stock
   subTotal:SubTotal = {};
@@ -204,35 +205,41 @@ export class GalleryComponent implements OnDestroy, OnInit{
   }
 
   addToPreOrder(){
-    let itens:CartItem[] = [];
-    Object.keys(this.grid[this.selectedProduct.id]).forEach((kcolor) =>{
-      Object.keys(this.grid[this.selectedProduct.id][kcolor]).forEach((ksize) =>{
-        if(this.grid[this.selectedProduct.id][kcolor][ksize]>0){
-          //monta o objeto que serah adicionado ao carrinho
-          let item:CartItem = {
-            id_customer:parseInt(String(localStorage.getItem('id_profile'))),
-            id_product:this.selectedProduct.id,
-            color: kcolor,
-            size: ksize,
-            quantity: this.grid[this.selectedProduct.id][kcolor][ksize],
-            price: this.selectedProduct.price
-          }
+    if(!this.hasSended){
+      this.hasSended = true;
 
-          itens.push(item);
+      let itens:CartItem[] = [];
+      Object.keys(this.grid[this.selectedProduct.id]).forEach((kcolor) =>{
+        Object.keys(this.grid[this.selectedProduct.id][kcolor]).forEach((ksize) =>{
+          if(this.grid[this.selectedProduct.id][kcolor][ksize]>0){
+            //monta o objeto que serah adicionado ao carrinho
+            let item:CartItem = {
+              id_customer:parseInt(String(localStorage.getItem('id_profile'))),
+              id_product:this.selectedProduct.id,
+              color: kcolor,
+              size: ksize,
+              quantity: this.grid[this.selectedProduct.id][kcolor][ksize],
+              price: this.selectedProduct.price
+            }
+
+            itens.push(item);
+          }
+        });
+      });
+
+      this.sOrder.addToCart(itens).subscribe({
+        next: result =>{
+          if (result==true){
+            this.sOrder.annouceProduct();
+            this.msg.success('Produto adicionado com sucesso ao pedido!');
+            this.hasSended = false;
+          }else{
+            this.msg.error('Ocorreu uma falha ao adicionar o produto ao pedido!');
+            this.hasSended = false;
+          }
         }
       });
-    });
-
-    this.sOrder.addToCart(itens).subscribe({
-      next: result =>{
-        if (result==true){
-          this.sOrder.annouceProduct();
-          this.msg.success('Produto adicionado com sucesso ao pedido!');
-        }else{
-          this.msg.error('Ocorreu uma falha ao adicionar o produto ao pedido!');
-        }
-      }
-    });
+    }
   }
 
   next(){
