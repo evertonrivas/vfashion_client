@@ -33,9 +33,9 @@
         <div class="col">
             <div class="pagination p1 justify-content-center">
                 <ul>
-                  <a href="javascript:void(0);" [ngClass]="{'disabled': myHistory.paginate.page === 1}" (click)="prev()"><li>&laquo;</li></a>
+                  <a href="javascript:void(0);" [ngClass]="{'disabled': myHistory.pagination.page === 1}" (click)="prev()"><li>&laquo;</li></a>
                   <a href="javascript:void(0);" *ngFor="let number of numbers" [ngClass]="{ 'is-active': options.page === number }" (click)="to(number)"><li>{{number}}</li></a>
-                  <a href="javascript:void(0);" [ngClass]="{'disabled': myHistory.paginate.pages===myHistory.paginate.page}" (click)="next()"><li>&raquo;</li></a>
+                  <a href="javascript:void(0);" [ngClass]="{'disabled': myHistory.pagination.pages===myHistory.pagination.page}" (click)="next()"><li>&raquo;</li></a>
                 </ul>
               </div>
         </div>

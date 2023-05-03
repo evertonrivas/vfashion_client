@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderHistory,PaginativeHistory,Paginate, HistoryOptions } from 'src/app/services/order.model';
+import { OrderHistory,PaginativeHistory, HistoryOptions } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order.service';
 import { faDolly } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,7 +13,7 @@ declare var window:any;
 export class HistoryComponent implements OnInit{
   faDolly = faDolly;
   myHistory:PaginativeHistory = {
-    paginate: {
+    pagination: {
       has_next:false,
       page: 0,
       pages: 0,
@@ -38,7 +38,7 @@ export class HistoryComponent implements OnInit{
 
   get numbers(): number[]{
     //funcao necessaria para formatar as pagianas da paginacao
-    const limit = this.myHistory.paginate.pages;
+    const limit = this.myHistory.pagination.pages;
     let retorno = Array.from({length: limit}, (_,i) => i+1);
     return retorno;
   }
