@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService, ISysAuth } from '../services/auth.service';
+import { SecurityService } from '../services/security.service';
+import { Auth } from '../models/auth.model';
 import { Router } from '@angular/router';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit{
   sys_config:any = (configData as any).default;
   token: string|undefined;
   loading = false;
-  app_token:ISysAuth = {
+  app_token:Auth = {
     token_access: "",
     token_type: "",
     token_expire: "",
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit{
     chkRemember: new FormControl()
   });
 
-  constructor(private authService: AuthService, 
+  constructor(private authService: SecurityService, 
     private route:Router, 
     private recaptchaV3Service: ReCaptchaV3Service,
     private tostr:ToastrService){
