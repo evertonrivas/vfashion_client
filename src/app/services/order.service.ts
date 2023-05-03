@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable,Subject } from 'rxjs';
 import { MyHttp, ContentType } from './my-http';
-import { CartContent, CartItem, HistoryOptions, PaginativeHistory, PaymentCondition } from './order.model';
+import { CartContent, CartItem, HistoryOptions, PaginativeHistory, PaymentCondition } from 'src/app/models/order.model';
 import * as configData from 'src/assets/config.json';
-import { Product } from './product.model';
+import { Product } from 'src/app/models/product.model';
 
 
 @Injectable({

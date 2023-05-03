@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import * as configData from 'src/assets/config.json';
-import { ProductCategory, ProductCollection, B2bBrand, ProductType, ProductModel, Size, Color, Filter } from './filter.model';
+import { ProductCategory, ProductCollection, B2bBrand, ProductType, ProductModel, Size, Color } from 'src/app/models/product.model';
+import { Filter } from '../models/filter.model';
 import { MyHttp } from './my-http';
 
 @Injectable({

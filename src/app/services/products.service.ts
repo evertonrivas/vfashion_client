@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as configData from '../../assets/config.json';
-import { GalleryOptions, ResponsePaginativeProduct,ProductStock, Product } from './product.model';
+import * as configData from 'src/assets/config.json';
+import { GalleryOptions, ResponseProduct,ProductStock, Product } from 'src/app/models/product.model';
 import { MyHttp } from './my-http';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class ProductsService extends MyHttp{
     super(http);
   }
 
-  list(options:GalleryOptions):Observable<ResponsePaginativeProduct>{
+  list(options:GalleryOptions):Observable<ResponseProduct>{
     let httpParams = new HttpParams()
     if (options.page!=null){
       httpParams = httpParams.set("page",String(options.page));
@@ -55,7 +55,7 @@ export class ProductsService extends MyHttp{
       httpParams = httpParams.set('query',String(options.search));
     }
 
-    return this.http.get<ResponsePaginativeProduct>(this.sys_config.backend_cmm+'/products/gallery/',{
+    return this.http.get<ResponseProduct>(this.sys_config.backend_cmm+'/products/gallery/',{
       headers: this.getHeader(),
       params: httpParams
     });
