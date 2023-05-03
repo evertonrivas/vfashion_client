@@ -68,19 +68,19 @@
     <div class="col">
       <div class="pagination p1 justify-content-center">
         <ul>
-          <a href="javascript:void(0);" [ngClass]="{'disabled': response.paginate.page === 1}" (click)="prev()"><li>&laquo;</li></a>
+          <a href="javascript:void(0);" [ngClass]="{'disabled': response.pagination.page === 1}" (click)="prev()"><li>&laquo;</li></a>
           <a href="javascript:void(0);" *ngFor="let number of numbers" [ngClass]="{ 'is-active': options.page === number }" (click)="to(number)"><li>{{number}}</li></a>
-          <a href="javascript:void(0);" [ngClass]="{'disabled': response.paginate.pages===response.paginate.page}" (click)="next()"><li>&raquo;</li></a>
+          <a href="javascript:void(0);" [ngClass]="{'disabled': response.pagination.pages===response.pagination.page}" (click)="next()"><li>&raquo;</li></a>
         </ul>
       </div>
       <!-- <ul class="pagination justify-content-center">
-        <li class="page-item" [ngClass]="{'disabled': response.paginate.page === 1}">
+        <li class="page-item" [ngClass]="{'disabled': response.pagination.page === 1}">
           <a class="page-link" (click)="prev()">Anterior</a>
         </li>
         <li class="page-item" *ngFor="let number of numbers" [ngClass]="{ 'active': options.page === number }">
           <a class="page-link" (click)="to(number)">{{number}}</a>
         </li>
-        <li class="page-item" [ngClass]="{'disabled': response.paginate.pages===response.paginate.page}">
+        <li class="page-item" [ngClass]="{'disabled': response.pagination.pages===response.pagination.page}">
           <a class="page-link" (click)="next()">Pr&oacute;ximo</a>
         </li>
       </ul> -->

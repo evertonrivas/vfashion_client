@@ -4,9 +4,9 @@ import { FilterService } from 'src/app/services/filter.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { GalleryOptions, ResponsePaginativeProduct, Product, Paginate,ProductStock,SubTotal,Grid, ProductStockSizes } from 'src/app/services/product.model';
-import { CartColor, CartContent, CartItem, CartSize } from 'src/app/services/order.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { GalleryOptions, ResponseProduct, Product, ProductStock,SubTotal,Grid, ProductStockSizes } from 'src/app/models/product.model';
+import { Paginate } from 'src/app/models/paginate.model';
+import { CartColor, CartContent, CartItem, CartSize } from 'src/app/models/order.model';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -35,7 +35,7 @@ export class GalleryComponent implements OnDestroy, OnInit{
   selectedProduct:Product;
   options:GalleryOptions;
   
-  paginate: Paginate = {
+  pagination: Paginate = {
     registers: 0,
     page:0,
     per_page:0,
@@ -43,12 +43,13 @@ export class GalleryComponent implements OnDestroy, OnInit{
     has_next:false
   }
 
-  response: ResponsePaginativeProduct = {
+  response: ResponseProduct = {
     data:[],
-    paginate:this.paginate
+    pagination:this.pagination
   };
 
-  constructor(private sFilter:FilterService, private sProd: ProductsService,
+  constructor(private sFilter:FilterService, 
+    private sProd: ProductsService,
     private sOrder:OrderService,
     private msg:ToastrService,
     media:MediaMatcher,changeDetectorRef:ChangeDetectorRef){
@@ -92,7 +93,7 @@ export class GalleryComponent implements OnDestroy, OnInit{
 
   get numbers(): number[]{
     //funcao necessaria para formatar as pagianas da paginacao
-    const limit = this.response.paginate.pages;
+    const limit = this.response.pagination.pages;
     let retorno = Array.from({length: limit}, (_,i) => i+1);
     return retorno;
   }
