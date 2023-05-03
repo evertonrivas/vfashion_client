@@ -1,6 +1,6 @@
 import { Component,OnInit,OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { SecurityService } from '../services/security.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit,OnDestroy{
   protected txtSearch:string = "";
   private idTimer = 0;
 
-  constructor(private auth:AuthService,private myRoute:Router){
+  constructor(private auth:SecurityService,private myRoute:Router){
 
   }
 
