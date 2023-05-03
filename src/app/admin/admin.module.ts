@@ -10,13 +10,15 @@ import { LOCALE_ID, DEFAULT_CURRENCY_CODE } from '@angular/core';
 import ptBr from '@angular/common/locales/pt';
 import * as sys_config from 'src/assets/config.json';
 import { UsersComponent } from './users/users.component';
+import { EntitiesComponent } from './entities/entities.component';
 registerLocaleData(ptBr)
 
 @NgModule({
   declarations: [
     AdminComponent,
     DashboardComponent,
-    UsersComponent
+    UsersComponent,
+    EntitiesComponent
   ],
   imports: [
     CommonModule,
