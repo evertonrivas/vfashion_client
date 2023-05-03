@@ -1,10 +1,10 @@
 import { Component,ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { SecurityService } from '../services/security.service';
 import { Subscription } from 'rxjs';
 import { FilterService } from '../services/filter.service';
-import { Filter } from 'src/app/services/filter.model';
+import { Filter } from 'src/app/models/filter.model';
 import { OrderService } from '../services/order.service';
 import { faInstagram,faFacebook,faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import * as configData from 'src/assets/config.json';
@@ -30,7 +30,7 @@ export class SalesforceComponent implements OnDestroy, OnInit{
   constructor(changeDetectorRef:ChangeDetectorRef, 
     media: MediaMatcher, private myRoute:Router,
     private sOrder:OrderService, 
-    private auth:AuthService, private sFilter:FilterService){
+    private auth:SecurityService, private sFilter:FilterService){
     this.mobileQuery = media.matchMedia('(max-width:600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener('change',this._mobileQueryListener);
