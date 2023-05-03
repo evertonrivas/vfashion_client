@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Profile } from '../models/profile.model';
 import { User,UserOptions,UserResponse } from '../models/user.model';
 import { MyHttp } from './my-http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as configData from 'src/assets/config.json';
 
@@ -40,9 +40,20 @@ export class ProfileService extends MyHttp {
   }
 
   listUsers(options:UserOptions):Observable<UserResponse>{
+    let params:HttpParams = new HttpParams().set("page",options.page);
+    if (options.pagSize!=undefined){
+      params = params.set("pageSize",options.pagSize as number);
+    }
+    if (options.search!=undefined){
+      params = params.set("query",options.search as string);
+    }
+    if(options.orderBy!=undefined){
+      params = params.set("order_by",options.orderBy as string).set("order_dir",options.orderDir);
+    }
     var url = this.sys_config.backend_cmm+"/users/";
     return this.http.get<UserResponse>(url,{
-      headers: this.getHeader()
+      headers: this.getHeader(),
+      params: params
     });
   }
 
