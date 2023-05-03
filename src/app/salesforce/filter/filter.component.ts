@@ -2,7 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { FilterService } from 'src/app/services/filter.service';
-import { ProductCategory, ProductCollection, B2bBrand, ProductType,ProductModel, Size, Color, Filter } from 'src/app/services/filter.model';
+import { ProductCategory, ProductCollection, B2bBrand, ProductType, ProductModel, Size, Color } from 'src/app/models/product.model';
+import { Filter } from 'src/app/models/filter.model';
 import { Router } from '@angular/router';
 
 @Component({
