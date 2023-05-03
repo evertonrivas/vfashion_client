@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CartColor, CartContent, CartItem, CartSize } from 'src/app/services/order.model';
-import { Grid, Product, ProductStock, ProductStockSizes, SubTotal } from 'src/app/services/product.model';
+import { CartColor, CartContent, CartItem, CartSize } from 'src/app/models/order.model';
+import { Grid, Product, ProductStock, ProductStockSizes, SubTotal } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ActivatedRoute,Router } from '@angular/router';

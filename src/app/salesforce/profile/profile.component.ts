@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
 import { faSave,faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { Profile } from '../../services/profile.model';
-
+import { Profile } from 'src/app/models/profile.model';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -44,12 +43,12 @@ export class ProfileComponent implements OnInit {
     txtInstagram: new FormControl('')
   })
 
-  constructor(private authService:AuthService,private toastr: ToastrService, private route:Router){
+  constructor(private profile:ProfileService,private toastr: ToastrService, private route:Router){
 
   }
 
   ngOnInit(): void {
-    this.authService.loadProfile().subscribe({
+    this.profile.loadProfile().subscribe({
       next: data =>{
         this.myProfile.id = data.id;
         this.myProfile.city = data.city;
@@ -88,7 +87,7 @@ export class ProfileComponent implements OnInit {
     this.myProfile.phone        = this.frmProfile.controls.txtPhone.value as string;
     this.myProfile.email        = this.frmProfile.controls.txtEmail.value as string;
 
-    this.authService.saveProfile(this.myProfile).subscribe({
+    this.profile.saveProfile(this.myProfile).subscribe({
       next: data => {
         if ((data as boolean)==true){
           this.toastr.success('Registro salvo com sucesso!','Alerta!').onHidden.subscribe({
