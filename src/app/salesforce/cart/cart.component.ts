@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
-import { CartColor, CartContent, CartSize } from 'src/app/services/order.model';
+import { CartColor, CartContent, CartSize } from 'src/app/models/order.model';
 import { faTruckArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
