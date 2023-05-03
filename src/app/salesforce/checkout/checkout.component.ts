@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators,FormBuilder, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CartContent, CartColor,CartSize, PaymentCondition } from 'src/app/services/order.model';
+import { CartContent, CartColor,CartSize, PaymentCondition } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
