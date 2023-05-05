@@ -1,13 +1,13 @@
 import { Paginate } from "./paginate.model"
 
 export interface User {
-    id:number,
+    id:number | undefined,
     username:string,
-    password: string | null,
     type:string,
-    date_created: string,
-    date_updated: string,
     active: boolean
+    password: string | undefined,
+    date_created: string | undefined,
+    date_updated: string | undefined,
 }
 
 export interface UserOptions{
@@ -16,6 +16,7 @@ export interface UserOptions{
     pagSize:number | null,
     search:string | null,
     page:number
+    export: boolean
 }
 
 export interface UserResponse{
