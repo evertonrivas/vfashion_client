@@ -14,7 +14,9 @@ export class AdminComponent implements OnInit,OnDestroy{
   authSub:Subscription = new Subscription;
   icone = "arrow_circle_right";
   protected txtSearch:string = "";
-  private idTimer = 0;
+  idTimer = 0;
+  showMenu:boolean = false;
+
 
   constructor(private auth:SecurityService,private myRoute:Router){
 
@@ -57,12 +59,13 @@ export class AdminComponent implements OnInit,OnDestroy{
   }
 
   toggleMenu():void{
-    const nav = document.getElementById("nav-bar");
+    this.showMenu = !this.showMenu;
+    this.icone = (this.icone=="arrow_circle_right")?"arrow_circle_left":"arrow_circle_right";
+  }
 
-    if (nav){
-      nav.classList.toggle('show');
-      this.icone = (this.icone=="arrow_circle_right")?"arrow_circle_left":"arrow_circle_right";
-    }
+  hideMenu():void{
+    this.showMenu = false;
+    this.icone = "arrow_circle_right";
   }
 
   onNavigate(event:Event,to:string):void{
