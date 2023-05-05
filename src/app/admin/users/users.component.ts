@@ -1,35 +1,53 @@
 import { Component,AfterViewInit, OnInit, OnDestroy } from '@angular/core';
-import { Pagination } from '../pagination';
-import { UserOptions } from 'src/app/models/user.model';
+import { DataManipulation } from '../datamanipulation';
+import { User, UserOptions } from 'src/app/models/user.model';
 import { ProfileService } from 'src/app/services/profile.service';
-import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+import * as Papa from 'papaparse';
 
 declare var window:any;
+
+export function confirmPasswordValidator(control: AbstractControl): ValidationErrors | null {
+  const password = control.get('password');
+  const confirmPassword = control.get('confirmPassword');
+
+  return password && confirmPassword && password.value !== confirmPassword.value
+    ? { 'passwordMismatch': true }
+    : null;
+}
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent extends Pagination implements AfterViewInit, OnInit, OnDestroy{
-  masterChecked:boolean = false;
-  pageSize:number = 25;
-  win:any;
-  usrSub:Subscription = new Subscription;
+export class UsersComponent extends DataManipulation implements AfterViewInit, OnInit, OnDestroy{
   override options:UserOptions ={
     page:1,
-    pagSize: this.pageSize,
+    pagSize: 25,
     orderBy: null,
     orderDir: 'ASC',
-    search: null
+    search: null,
+    export: false
   };
+  massiveType:string = "";
+  massiveStatus:string = "";
 
-  constructor(private svc:ProfileService){
+  frmUser:FormGroup = new FormGroup({
+    txtUsername: new FormControl('',Validators.required),
+    txtPassword: new FormControl('',Validators.required),
+    txtCPassword: new FormControl('',[Validators.required,confirmPasswordValidator]),
+    slType: new FormControl('',Validators.required)
+  });
+
+  constructor(private svc:ProfileService,private toastr:ToastrService){
     super();
   }
 
   ngOnDestroy(): void {
-    this.usrSub.unsubscribe();
+    this.serviceSub.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -37,9 +55,14 @@ export class UsersComponent extends Pagination implements AfterViewInit, OnInit,
   }
 
   loadData():void{
-    this.usrSub = this.svc.listUsers(this.options).subscribe({
+    this.serviceSub = this.svc.userList(this.options).subscribe({
       next: data => {
         this.response = data;
+        (this.response.data as User[]).forEach((usr) =>{
+          if (this.registryChecked[(usr.id as number)]==undefined){
+            this.registryChecked[(usr.id as number)] = false;
+          }
+        })
       },
       complete: () =>{
         this.options.pagSize = this.response.pagination.per_page;
@@ -54,10 +77,9 @@ export class UsersComponent extends Pagination implements AfterViewInit, OnInit,
       case 'A': retorno = 'Administrador'; break;
       case 'L': retorno = 'Lojista'; break;
       case 'R': retorno = 'Representante'; break;
-      case 'V': retorno = 'Vendedor'; break;
       case 'C': retorno = 'Usuário do Sistema'; break;
+      case 'V': retorno = 'Vendedor'; break;
     }
-    /**A = Administrador, L = Lojista, R = Representante, V = Vendedor, C = Company User */
 
     return retorno;
   }
@@ -67,14 +89,173 @@ export class UsersComponent extends Pagination implements AfterViewInit, OnInit,
     tooltiplist.forEach((tooltipTriggerEl) =>{
       new window.bootstrap.Tooltip(tooltipTriggerEl);
     });
+
+    let el = document.getElementById("offcanvasEdit")
+    this.offcanvas = new window.bootstrap.Offcanvas(el);
   }
 
-  checkUncheckAll():void{
-
+  override setPaginationSize(size:number):void{
+    super.setPaginationSize(size);
+    this.loadData();
   }
 
-  setPaginationSize(size:number):void{
-    this.pageSize = size;
-    this.options.pagSize = size;
+  override next(): void {
+    super.next();
+    this.loadData();
+  }
+
+  override prev(): void {
+    super.prev();
+    this.loadData();
+  }
+
+  override to(page: number): void {
+    super.to(page);
+    this.loadData();
+  }
+
+  override exportCSV(): void {
+    super.exportCSV();
+    this.serviceSub = this.svc.userList(this.options).subscribe((data) =>{
+      const string = JSON.stringify(data);
+      const json = JSON.parse(string);
+      const csvString = Papa.unparse(json,{delimiter:';'});
+      const blob = new Blob([csvString],{type: 'application/csv;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      
+      const link = document.createElement("a");
+      link.href  = url;
+      link.download = "data.csv";
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+    })
+  }
+
+  override exportJSON(): void {
+    super.exportJSON();
+    this.serviceSub = this.svc.userList(this.options).subscribe((data)=>{
+      let theJSON = JSON.stringify(data);
+      const blob = new Blob([theJSON],{type: 'application/json;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = 'data.json';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+
+  onSubmit():boolean{
+    this.hasSend = true;
+
+    if (this.frmUser.invalid){
+      return false;
+    }
+    if(this.hasSend){
+      let usr:User[] = [{
+        username: this.frmUser.controls["txtUsername"].value,
+        password: this.frmUser.controls["txtPassword"].value,
+        type: this.frmUser.controls["slType"].value,
+        id: undefined,
+        active: true,
+        date_created: undefined,
+        date_updated: undefined
+      }];
+      this.save(usr);
+    }
+    
+    return true;
+  }
+
+  save(usrs:User[]):void{
+    this.serviceSub = this.svc.userSave(usrs).subscribe({
+      next: data =>{
+        if (data)
+          this.toastr.success("Usuário(s) salvo(s) com sucesso!");
+        else
+          this.toastr.error("Ocorreu um problema ao salvar o(s) usuário(s)!");
+      }
+    });
+    if (this.isEdit){
+      this.frmUser.controls["txtPassword"].addValidators(Validators.required);
+      this.frmUser.controls["txtCPassword"].addValidators(Validators.required);
+      this.frmUser.controls["txtPassword"].updateValueAndValidity();
+    this.frmUser.controls["txtCPassword"].updateValueAndValidity();
+    }
+    this.isEdit = false;
+    this.hasSend = false;
+    this.offcanvas.hide();
+    this.loadData();
+  }
+
+  onNew(){
+    this.frmUser.controls['txtUsername'].setValue('');
+    this.frmUser.controls['txtPassword'].setValue('');
+    this.frmUser.controls['txtCPassword'].setValue('');
+    this.frmUser.controls['slType'].setValue('');
+
+    this.offcanvas.show();
+  }
+
+  onEdit(usr:User){
+
+    this.isEdit = true;
+    
+    this.frmUser.controls["txtPassword"].removeValidators(Validators.required);
+    this.frmUser.controls["txtCPassword"].removeValidators([Validators.required,confirmPasswordValidator]);
+    this.frmUser.controls["txtPassword"].updateValueAndValidity();
+    this.frmUser.controls["txtCPassword"].updateValueAndValidity();
+
+    this.frmUser.controls["txtUsername"].setValue(usr.username);
+    this.frmUser.controls["slType"].setValue(usr.type);
+
+    this.offcanvas.show();
+  }
+
+  onChangeMassive():void{
+    let usrs:User[] = [];
+    Object.keys(this.registryChecked).forEach((v,idx) =>{
+      if (this.registryChecked[parseInt(v)]==true){
+        (this.response.data as User[]).forEach((usr) =>{
+          if (usr.id!=undefined && usr.id == parseInt(v)){
+
+            let status = (this.massiveStatus!="")?((this.massiveStatus=="2")?false:true):usr.active;
+
+            let u:User = {
+              id : usr.id,
+              active: status,
+              type: (this.massiveType!="")?this.massiveType:usr.type,
+              date_created:undefined,
+              date_updated:undefined,
+              password:undefined,
+              username:""
+            }
+            usrs.push(u);
+          }
+        });
+        this.totalToChange++;
+      }
+    });
+
+
+    if (this.totalToChange > 0){
+      this.serviceSub = this.svc.userMassive(usrs).subscribe((data)=>{
+        if(data){
+          this.toastr.success("Usuário(s) atualizado(s) com sucesso!");
+          this.totalToChange = 0;
+          this.loadData();
+        }else{
+          this.toastr.error("Ocorreu um problema ao tentar alterar o(s) usuário(s)!");
+          this.totalToChange = 0;
+        }
+      });
+    }else{
+      // aqui exibe o modal
+      this.toastr.warning("Selecione ao menos um usuário para executar a ação!");
+    }
   }
 }
