@@ -39,7 +39,7 @@ export class ProfileService extends MyHttp {
     });
   }
 
-  listUsers(options:UserOptions):Observable<UserResponse>{
+  userList(options:UserOptions):Observable<UserResponse>{
     let params:HttpParams = new HttpParams().set("page",options.page);
     if (options.pagSize!=undefined){
       params = params.set("pageSize",options.pagSize as number);
@@ -50,6 +50,9 @@ export class ProfileService extends MyHttp {
     if(options.orderBy!=undefined){
       params = params.set("order_by",options.orderBy as string).set("order_dir",options.orderDir);
     }
+    if(options.export!=false){
+      params = params.set("to_export",true);
+    }
     var url = this.sys_config.backend_cmm+"/users/";
     return this.http.get<UserResponse>(url,{
       headers: this.getHeader(),
@@ -57,21 +60,29 @@ export class ProfileService extends MyHttp {
     });
   }
 
-  getUser(id:number):Observable<User>{
-    var url = this.sys_config.backend_cmm+"/users/"+id.toString();
-    return this.http.get<User>(url,{
-      headers:this.getHeader()
-    })
+  userSave(users:User[]):Observable<boolean>{
+    var url = this.sys_config.backend_cmm+"/users/";
+    return this.http.post<boolean>(url,users,{
+      headers:this.getHeader(true)
+    });
   }
 
-  saveUser(user:User):Observable<boolean>{
-    var frmData = new FormData();
-    frmData.append("username",user.username);
-    frmData.append("type",user.type);
-    frmData.append("active",String(user.active));
-    var url = this.sys_config.backend_cmm+"/users";
+  userUpdate(user:User):Observable<boolean>{
+    var url = this.sys_config.backend_cmm+"/users/"+user.id?.toString();
+    let frmData = new FormData();
+    frmData.set("username",user.username);
+    frmData.set("password",String(user.password));
+    frmData.set("active",String(user.active));
+    frmData.set("type",user.type);
     return this.http.post<boolean>(url,frmData,{
       headers:this.getHeaderPost()
+    });
+  }
+
+  userMassive(users:User[]):Observable<boolean>{
+    var url = this.sys_config.backend_cmm+"/users/massive-change";
+    return this.http.post<boolean>(url,users,{
+      headers:this.getHeader(true)
     });
   }
 }
