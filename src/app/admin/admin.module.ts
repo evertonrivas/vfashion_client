@@ -11,6 +11,7 @@ import ptBr from '@angular/common/locales/pt';
 import * as sys_config from 'src/assets/config.json';
 import { UsersComponent } from './users/users.component';
 import { EntitiesComponent } from './entities/entities.component';
+import { ConfigComponent } from './config/config.component';
 registerLocaleData(ptBr)
 
 @NgModule({
@@ -18,7 +19,8 @@ registerLocaleData(ptBr)
     AdminComponent,
     DashboardComponent,
     UsersComponent,
-    EntitiesComponent
+    EntitiesComponent,
+    ConfigComponent
   ],
   imports: [
     CommonModule,
