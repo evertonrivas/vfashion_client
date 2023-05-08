@@ -5,7 +5,6 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import * as Papa from 'papaparse';
 
 declare var window:any;
 
@@ -114,39 +113,43 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
     this.loadData();
   }
 
-  override exportCSV(): void {
-    super.exportCSV();
-    this.serviceSub = this.svc.userList(this.options).subscribe((data) =>{
-      const string = JSON.stringify(data);
-      const json = JSON.parse(string);
-      const csvString = Papa.unparse(json,{delimiter:';'});
-      const blob = new Blob([csvString],{type: 'application/csv;charset=utf-8'});
-      const url = URL.createObjectURL(blob);
-      
-      const link = document.createElement("a");
-      link.href  = url;
-      link.download = "data.csv";
-      document.body.appendChild(link);
-      link.click();
-
-      document.body.removeChild(link);
-    })
+  exportCSV(all:boolean = false): void {
+    if(all){
+      this.serviceSub = this.svc.userList({
+        export: true,
+        orderBy: "id",
+        orderDir: 'ASC',
+        page: 0,
+        pagSize: 0,
+        search: ""
+      }).subscribe((data) =>{
+        this.exportFile(data,"C");
+      });
+    }else{
+      this.serviceSub = this.svc.userList(this.options).subscribe((data) =>{
+        this.exportFile(data.data,"C");
+      });
+    }
   }
 
-  override exportJSON(): void {
-    super.exportJSON();
-    this.serviceSub = this.svc.userList(this.options).subscribe((data)=>{
-      let theJSON = JSON.stringify(data);
-      const blob = new Blob([theJSON],{type: 'application/json;charset=utf-8'});
-      const url = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = 'data.json';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
+  exportJSON(all:boolean = false): void {
+    if(all){
+      this.serviceSub = this.svc.userList({
+        export: true,
+        orderBy: "id",
+        orderDir: 'ASC',
+        page: 0,
+        pagSize: 0,
+        search: ""
+      }).subscribe((data)=>{
+        this.exportFile(data,"J");
+      });
+    }else{
+      this.serviceSub = this.svc.userList(this.options).subscribe((data)=>{
+        this.exportFile(data.data,"J");
+      });
+    }
+    
   }
 
   onSubmit():boolean{
@@ -241,7 +244,6 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
       }
     });
 
-
     if (this.totalToChange > 0){
       this.serviceSub = this.svc.userMassive(usrs).subscribe((data)=>{
         if(data){
@@ -257,5 +259,9 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
       // aqui exibe o modal
       this.toastr.warning("Selecione ao menos um usuário para executar a ação!");
     }
+  }
+
+  onSearch():void{
+    this.loadData();
   }
 }

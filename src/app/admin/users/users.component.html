@@ -1,7 +1,8 @@
 <div class="container">
     <h3>Gest&atilde;o de Usu&aacute;rios</h3>
+    <!--Barra de dados-->
     <div class="d-flex pb-4 gap-2">
-        <input type="text" class="form-control form-control-sm" placeholder="Buscar...">
+        <input type="text" class="form-control form-control-sm" placeholder="Buscar..." (keydown.enter)="onSearch()" [(ngModel)]="options.search">
         <div class="btn-group btn-group-sm">
             <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Novo" (click)="onNew()"><span class="material-symbols-outlined align-middle">add</span></button>
 
@@ -27,10 +28,13 @@
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportCSV()">CSV</a></li>
                     <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportJSON()">JSON</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportCSV(true)">CSV (Tudo)</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportJSON(true)">JSON (Tudo)</a></li>
                 </ul>
             </div>
         </div>
     </div>
+    <!--Fim da barra de dados-->
     <div class="collapse" id="massiveCollapse" [class.show]="isCollpasedMassive">
         <div class="card card-body">
             <div class="row">
