@@ -6,6 +6,11 @@
         <div class="btn-group btn-group-sm">
             <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Novo" (click)="onNew()"><span class="material-symbols-outlined align-middle">add</span></button>
 
+            <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Filtros">
+                <button type="button" class="btn btn-primary btn-sm" [class]="isCollpasedFilter ? 'active' : ''" (click)="collpaseFilter()" aria-expanded="false">
+                    <span class="material-symbols-outlined">filter_alt</span>
+                </button>
+            </div>
             <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Ações em massa">
                 <button type="button" class="btn btn-primary btn-sm" [class]="isCollpasedMassive ? 'active' : ''" (click)="collpaseMassive()" aria-expanded="false">
                     <span class="material-symbols-outlined">published_with_changes</span>
@@ -60,13 +65,20 @@
             </div>
             <div class="row mt-1">
                 <div class="col-md justify-content-end text-end">
-                    <button type="button" class="btn btn-primary btn-sm" (click)="onChangeMassive()">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="onExecuteMassive()">
                         <span class="material-symbols-outlined align-middle">commit</span> Executar
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="collapse" id="filterCollapse" [class.show]="isCollpasedFilter">
+        <div class="card card-body">
+            
+        </div>
+    </div>
+
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -88,7 +100,7 @@
                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" [(ngModel)]="registryChecked[item.id]">
                     </div></td>
                     <td>{{item.username}}</td>
-                    <td>{{getType(item.type)}}</td>
+                    <td>{{item.type | userType }}</td>
                     <td><span class="badge" [class]="item.active==true?'text-bg-success':'text-bg-danger'">{{item.active==true?'Ativo':'Inativo'}}</span></td>
                     <td>{{item.date_created | date:'dd/MM/YYYY HH:mm'}}</td>
                     <td>{{item.date_updated | date:'dd/MM/YYYY HH:mm'}}</td>
@@ -162,5 +174,23 @@
             </div>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal_massive" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmação de execução</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{msgMassive}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+          <button type="button" class="btn btn-primary" (click)="onChangeMassive()">Sim</button>
+        </div>
+      </div>
     </div>
   </div>

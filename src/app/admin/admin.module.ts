@@ -12,6 +12,12 @@ import * as sys_config from 'src/assets/config.json';
 import { UsersComponent } from './users/users.component';
 import { EntitiesComponent } from './entities/entities.component';
 import { ConfigComponent } from './config/config.component';
+import { CnpjCpfPipe } from '../pipes/cnpj-cpf.pipe';
+import { EntityTypePipe } from '../pipes/entity-type.pipe';
+import { UserTypePipe } from '../pipes/user-type.pipe';
+import { NameCutPipe } from '../pipes/name-cut.pipe';
+import { ProfileComponent } from './profile/profile.component';
+
 registerLocaleData(ptBr)
 
 @NgModule({
@@ -20,7 +26,12 @@ registerLocaleData(ptBr)
     DashboardComponent,
     UsersComponent,
     EntitiesComponent,
-    ConfigComponent
+    ConfigComponent,
+    CnpjCpfPipe,
+    EntityTypePipe,
+    UserTypePipe,
+    NameCutPipe,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +41,12 @@ registerLocaleData(ptBr)
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     })
+  ],
+  exports:[
+    CnpjCpfPipe,
+    EntityTypePipe,
+    UserTypePipe,
+    NameCutPipe
   ],
   providers:[
     {

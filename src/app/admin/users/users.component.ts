@@ -70,27 +70,19 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
     });
   }
 
-  getType(type:string):string{
-    let retorno:string = '';
-    switch(type){
-      case 'A': retorno = 'Administrador'; break;
-      case 'L': retorno = 'Lojista'; break;
-      case 'R': retorno = 'Representante'; break;
-      case 'C': retorno = 'Usuário do Sistema'; break;
-      case 'V': retorno = 'Vendedor'; break;
-    }
-
-    return retorno;
-  }
-
   ngAfterViewInit(): void {
     const tooltiplist = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     tooltiplist.forEach((tooltipTriggerEl) =>{
       new window.bootstrap.Tooltip(tooltipTriggerEl);
     });
 
-    let el = document.getElementById("offcanvasEdit")
-    this.offcanvas = new window.bootstrap.Offcanvas(el);
+    this.offcanvas = new window.bootstrap.Offcanvas(
+      document.getElementById("offcanvasEdit")
+    );
+
+    this.modal = new window.bootstrap.Modal(
+      document.getElementById("modal_massive")
+    );
   }
 
   override setPaginationSize(size:number):void{
@@ -240,24 +232,39 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
             usrs.push(u);
           }
         });
-        this.totalToChange++;
       }
     });
 
-    if (this.totalToChange > 0){
-      this.serviceSub = this.svc.userMassive(usrs).subscribe((data)=>{
-        if(data){
-          this.toastr.success("Usuário(s) atualizado(s) com sucesso!");
-          this.totalToChange = 0;
-          this.loadData();
-        }else{
-          this.toastr.error("Ocorreu um problema ao tentar alterar o(s) usuário(s)!");
-          this.totalToChange = 0;
-        }
-      });
+    this.serviceSub = this.svc.userMassive(usrs).subscribe((data)=>{
+      if(data){
+        this.toastr.success("Usuário(s) atualizado(s) com sucesso!");
+        this.totalToChange = 0;
+        this.loadData();
+        this.modal.hide();
+      }else{
+        this.toastr.error("Ocorreu um problema ao tentar alterar o(s) usuário(s)!");
+        this.totalToChange = 0;
+        this.modal.hide();
+      }
+    });
+  }
+
+  onExecuteMassive():void{
+    Object.keys(this.registryChecked).forEach((k)=>{
+      if (this.registryChecked[parseInt(k)]==true){
+        this.totalToChange++;
+      }
+    });
+    if (this.totalToChange==1){
+      this.msgMassive = 'Deseja realmente executar ação no registro selecionado?';
     }else{
-      // aqui exibe o modal
-      this.toastr.warning("Selecione ao menos um usuário para executar a ação!");
+      this.msgMassive = 'Deseja realmente executar ação massiva em todos os registros selecionados?';
+    }
+    if (this.totalToChange > 0 ){
+      this.modal.show();
+    }
+    else{
+      this.toastr.warning('Selecione ao menos um registro para alterar!');
     }
   }
 
