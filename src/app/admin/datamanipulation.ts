@@ -65,11 +65,11 @@ export class DataManipulation{
         });
     }
 
-    collpaseMassive():void{
+    collapseMassive():void{
         this.isCollpasedMassive = !this.isCollpasedMassive;
     }
 
-    collpaseFilter():void{
+    collapseFilter():void{
         this.isCollpasedFilter = !this.isCollpasedFilter;
     }
 
