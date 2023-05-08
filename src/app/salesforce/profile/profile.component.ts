@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.profile.loadProfile().subscribe({
+    this.profile.profileGet().subscribe({
       next: data =>{
         this.myProfile.id = data.id;
         this.myProfile.city = data.city;
@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit {
     this.myProfile.phone        = this.frmProfile.controls.txtPhone.value as string;
     this.myProfile.email        = this.frmProfile.controls.txtEmail.value as string;
 
-    this.profile.saveProfile(this.myProfile).subscribe({
+    this.profile.profileSave(this.myProfile).subscribe({
       next: data => {
         if ((data as boolean)==true){
           this.toastr.success('Registro salvo com sucesso!','Alerta!').onHidden.subscribe({

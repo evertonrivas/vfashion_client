@@ -5,6 +5,7 @@ import { MyHttp } from './my-http';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as configData from 'src/assets/config.json';
+import { Entity, EntityOptions, EntityResponse } from '../models/entity.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,13 @@ export class ProfileService extends MyHttp {
     super(http);
   }
 
-  loadProfile():Observable<Profile>{
+  profileGet():Observable<Profile>{
     var url = this.sys_config.backend_cmm+"/legal-entities/"+localStorage.getItem("id_user");
     return this.http.get<Profile>(url,{
       headers: this.getHeader()});
   }
 
-  saveProfile(profile:Profile):Observable<boolean>{
+  profileSave(profile:Profile):Observable<boolean>{
     var frmData = new FormData();
     frmData.append("name",profile.name);
     frmData.append("instagram",profile.instagram);
@@ -36,6 +37,34 @@ export class ProfileService extends MyHttp {
     
     return this.http.post<boolean>(this.sys_config.backend_cmm+"/legal-entities/"+profile.id,frmData,{
       headers:this.getHeader()
+    });
+  }
+
+  profileList(options:EntityOptions):Observable<EntityResponse>{
+    let params:HttpParams = new HttpParams().set("page",options.page);
+    if (options.pagSize!=undefined){
+      params = params.set("pageSize",options.pagSize as number);
+    }
+    if (options.search!=undefined){
+      params = params.set("query",options.search as string);
+    }
+    if(options.orderBy!=undefined){
+      params = params.set("order_by",options.orderBy as string).set("order_dir",options.orderDir);
+    }
+    if(options.export!=false){
+      params = params.set("to_export",true);
+    }
+    var url = this.sys_config.backend_cmm+"/legal-entities/";
+    return this.http.get<UserResponse>(url,{
+      headers: this.getHeader(),
+      params: params
+    });
+  }
+
+  profileMassive(entities:Entity[]):Observable<boolean>{
+    var url = this.sys_config.backend_cmm+"/legal=entities/massive-change";
+    return this.http.post<boolean>(url,entities,{
+      headers:this.getHeader(true)
     });
   }
 
