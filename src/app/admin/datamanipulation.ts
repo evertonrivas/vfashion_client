@@ -16,12 +16,13 @@ export class DataManipulation{
     isEdit:boolean = false;
     registryChecked:Checkbox = {};
     serviceSub:Subscription = new Subscription;
-    isCollpasedMassive:boolean = false;
-    isCollpasedFilter:boolean = false;
+    isCollapsedMassive:boolean = false;
+    isCollapsedFilter:boolean = false;
     offcanvas:any;
     modal:any;
     totalToChange:number = 0;
     msgMassive:string = "";
+    searchTerm:string = "";
 
     constructor(){
         this.response = {
@@ -66,11 +67,11 @@ export class DataManipulation{
     }
 
     collapseMassive():void{
-        this.isCollpasedMassive = !this.isCollpasedMassive;
+        this.isCollapsedMassive = !this.isCollapsedMassive;
     }
 
     collapseFilter():void{
-        this.isCollpasedFilter = !this.isCollpasedFilter;
+        this.isCollapsedFilter = !this.isCollapsedFilter;
     }
 
     exportFile(data:any, type:string = "J"):void{
