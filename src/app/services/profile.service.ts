@@ -50,6 +50,8 @@ export class ProfileService extends MyHttp {
     }
     if(options.orderBy!=undefined){
       params = params.set("order_by",options.orderBy as string).set("order_dir",options.orderDir);
+    }else{
+      params = params.set("order_dir",options.orderDir);
     }
     if(options.export!=false){
       params = params.set("to_export",true);
@@ -78,6 +80,8 @@ export class ProfileService extends MyHttp {
     }
     if(options.orderBy!=undefined){
       params = params.set("order_by",options.orderBy as string).set("order_dir",options.orderDir);
+    }else{
+      params = params.set("order_dir",options.orderDir);
     }
     if(options.export!=false){
       params = params.set("to_export",true);
