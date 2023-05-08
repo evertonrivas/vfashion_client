@@ -1,6 +1,7 @@
 import { Subscription } from "rxjs";
 import { Checkbox } from "../models/checkbox.model";
 import { Paginate } from "../models/paginate.model";
+import * as Papa from 'papaparse';
 
 interface Response{
     pagination: Paginate,
@@ -16,9 +17,11 @@ export class DataManipulation{
     registryChecked:Checkbox = {};
     serviceSub:Subscription = new Subscription;
     isCollpasedMassive:boolean = false;
+    isCollpasedFilter:boolean = false;
     offcanvas:any;
-    dialog:any;
+    modal:any;
     totalToChange:number = 0;
+    msgMassive:string = "";
 
     constructor(){
         this.response = {
@@ -66,11 +69,35 @@ export class DataManipulation{
         this.isCollpasedMassive = !this.isCollpasedMassive;
     }
 
-    exportCSV():void{
-        this.options.export = true
+    collpaseFilter():void{
+        this.isCollpasedFilter = !this.isCollpasedFilter;
     }
 
-    exportJSON():void{
-        this.options.export = true
+    exportFile(data:any, type:string = "J"):void{
+        const link = document.createElement("a");
+
+        if (type=="C"){
+            const string = JSON.stringify(data);
+            const json = JSON.parse(string);
+            const csvString = Papa.unparse(json,{delimiter:';'});
+            const blob = new Blob([csvString],{type: 'application/csv;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            
+            link.href  = url;
+            link.download = "data.csv";
+        }
+        else{
+            let theJSON = JSON.stringify(data);
+            const blob = new Blob([theJSON],{type: 'application/json;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+
+            link.href = url;
+            link.download = 'data.json';
+        }
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
     }
 }
