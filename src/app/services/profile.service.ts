@@ -53,9 +53,7 @@ export class ProfileService extends MyHttp {
     }else{
       params = params.set("order_dir",options.orderDir);
     }
-    if(options.export!=false){
-      params = params.set("to_export",true);
-    }
+      params = params.set("list_all",options.list_all);
     var url = this.sys_config.backend_cmm+"/legal-entities/";
     return this.http.get<UserResponse>(url,{
       headers: this.getHeader(),
@@ -83,9 +81,7 @@ export class ProfileService extends MyHttp {
     }else{
       params = params.set("order_dir",options.orderDir);
     }
-    if(options.export!=false){
-      params = params.set("to_export",true);
-    }
+    params = params.set("list_all",options.list_all);
     var url = this.sys_config.backend_cmm+"/users/";
     return this.http.get<UserResponse>(url,{
       headers: this.getHeader(),
