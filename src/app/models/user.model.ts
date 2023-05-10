@@ -16,7 +16,7 @@ export interface UserOptions{
     pagSize:number | null,
     search:string | null,
     page:number
-    export: boolean
+    list_all: boolean
 }
 
 export interface UserResponse{

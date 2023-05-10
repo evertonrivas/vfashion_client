@@ -18,7 +18,7 @@ export interface EntityOptions{
     pagSize:number | null,
     search:string | null,
     page:number
-    export: boolean
+    list_all: boolean
 }
 
 export interface EntityResponse{
