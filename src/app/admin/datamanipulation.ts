@@ -68,10 +68,22 @@ export class DataManipulation{
 
     collapseMassive():void{
         this.isCollapsedMassive = !this.isCollapsedMassive;
+        let el:HTMLElement|null = document.getElementById("massiveFilterPanel");
+        if(el!=null){
+            if(el.className=="collapse show"){
+                this.isCollapsedFilter = false;
+            }
+        }
     }
 
     collapseFilter():void{
         this.isCollapsedFilter = !this.isCollapsedFilter;
+        let el:HTMLElement|null = document.getElementById("massiveFilterPanel");
+        if(el!=null){
+            if(el.className=="collapse show"){
+                this.isCollapsedMassive = false;
+            }
+        }
     }
 
     exportFile(data:any, type:string = "J"):void{
