@@ -2,20 +2,15 @@
     <h3>Gest&atilde;o de Usu&aacute;rios</h3>
     <!--Barra de dados-->
     <div class="d-flex pb-4 gap-2">
-        <input type="text" class="form-control form-control-sm" placeholder="Buscar..." (keydown.enter)="onSearch()" [(ngModel)]="options.search">
+        <input type="text" class="form-control form-control-sm" placeholder="Buscar..." (keydown.enter)="onSearch()" [(ngModel)]="searchTerm">
         <div class="btn-group btn-group-sm">
             <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Novo" (click)="onNew()"><span class="material-symbols-outlined align-middle">add</span></button>
-
-            <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Filtros">
-                <button type="button" class="btn btn-primary btn-sm" [class]="isCollpasedFilter ? 'active' : ''" (click)="collpaseFilter()" aria-expanded="false">
-                    <span class="material-symbols-outlined">filter_alt</span>
-                </button>
-            </div>
-            <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Ações em massa">
-                <button type="button" class="btn btn-primary btn-sm" [class]="isCollpasedMassive ? 'active' : ''" (click)="collpaseMassive()" aria-expanded="false">
-                    <span class="material-symbols-outlined">published_with_changes</span>
-                </button>
-            </div>
+            <button type="button" class="btn btn-primary btn-sm" [class]="isCollapsedFilter ? 'active' : ''" (click)="collapseFilter()" aria-expanded="false" data-bs-toggle="tooltip" title="Filtros">
+                <span class="material-symbols-outlined">filter_alt</span>
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" [class]="isCollapsedMassive ? 'active' : ''" (click)="collapseMassive()" aria-expanded="false" data-bs-toggle="tooltip" title="Ações em massa">
+                <span class="material-symbols-outlined">published_with_changes</span>
+            </button>
             <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Paginação">
                 <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
                     {{this.options.pagSize}}
@@ -40,7 +35,7 @@
         </div>
     </div>
     <!--Fim da barra de dados-->
-    <div class="collapse" id="massiveCollapse" [class.show]="isCollpasedMassive">
+    <div class="collapse" id="massiveFilterPanel" [class.show]="isCollapsedMassive || isCollapsedFilter">
         <div class="card card-body">
             <div class="row">
                 <div class="col-md">
@@ -64,18 +59,17 @@
                 </div>
             </div>
             <div class="row mt-1">
-                <div class="col-md justify-content-end text-end">
+                <div class="col-md justify-content-end text-end" *ngIf="isCollapsedMassive">
                     <button type="button" class="btn btn-primary btn-sm" (click)="onExecuteMassive()">
                         <span class="material-symbols-outlined align-middle">commit</span> Executar
                     </button>
                 </div>
+                <div class="col-md justify-content-end text-end" *ngIf="isCollapsedFilter">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="onExecuteFilter()">
+                        <span class="material-symbols-outlined align-middle">search</span> Filtrar
+                    </button>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="collapse" id="filterCollapse" [class.show]="isCollpasedFilter">
-        <div class="card card-body">
-            
         </div>
     </div>
 

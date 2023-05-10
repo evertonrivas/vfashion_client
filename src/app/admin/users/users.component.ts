@@ -23,13 +23,13 @@ export function confirmPasswordValidator(control: AbstractControl): ValidationEr
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent extends DataManipulation implements AfterViewInit, OnInit, OnDestroy{
-  override options:UserOptions ={
+  override options:UserOptions = {
     page:1,
     pagSize: 25,
     orderBy: null,
     orderDir: 'ASC',
     search: null,
-    export: false
+    list_all: false
   };
   massiveType:string = "";
   massiveStatus:string = "";
@@ -108,7 +108,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
   exportCSV(all:boolean = false): void {
     if(all){
       this.serviceSub = this.svc.userList({
-        export: true,
+        list_all: true,
         orderBy: "id",
         orderDir: 'ASC',
         page: 0,
@@ -127,7 +127,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
   exportJSON(all:boolean = false): void {
     if(all){
       this.serviceSub = this.svc.userList({
-        export: true,
+        list_all: true,
         orderBy: "id",
         orderDir: 'ASC',
         page: 0,
@@ -213,7 +213,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
 
   onChangeMassive():void{
     let usrs:User[] = [];
-    Object.keys(this.registryChecked).forEach((v,idx) =>{
+    Object.keys(this.registryChecked).forEach((v) =>{
       if (this.registryChecked[parseInt(v)]==true){
         (this.response.data as User[]).forEach((usr) =>{
           if (usr.id!=undefined && usr.id == parseInt(v)){
@@ -268,7 +268,30 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
     }
   }
 
+  onExecuteFilter():void{
+    //limpa a busca antes de executar
+    this.options.search = "";
+    this.searchTerm = "";
+    let search_status:string = "";
+    let search_type:string = "";
+
+    if(this.massiveStatus!=""){
+      search_status = "is:active "+this.massiveStatus;
+    }
+    if(this.massiveType!=""){
+      search_type = "is:type "+this.massiveType;
+    }
+
+    if (search_status!="" && search_type!=""){
+      this.options.search = [search_status,search_type].join(",");
+    }else{
+      this.options.search = (search_status!="")?search_status:search_type;
+    }
+    this.loadData();
+  }
+
   onSearch():void{
+    this.options.search = "is:query "+this.searchTerm;
     this.loadData();
   }
 }
