@@ -107,7 +107,7 @@
             </tbody>
         </table>
     </div>
-    <div class="row mt-4" *ngIf="response.pagination.page > 0">
+    <div class="row mt-4" *ngIf="response.pagination!=undefined && response.pagination.page > 0">
         <div class="col">
           <div class="pagination p1 justify-content-center">
             <ul>
