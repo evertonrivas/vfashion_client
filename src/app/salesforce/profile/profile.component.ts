@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit {
     this.profile.profileSave(this.myProfile).subscribe({
       next: data => {
         if ((data as boolean)==true){
-          this.toastr.success('Registro salvo com sucesso!','Alerta!').onHidden.subscribe({
+          this.toastr.success('Registro salvo com sucesso!').onHidden.subscribe({
             next: data =>{
               this.route.navigate(["/salesforce/gallery"]);
             }
