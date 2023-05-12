@@ -36,7 +36,7 @@ export class ProfileService extends MyHttp {
     frmData.append("email",profile.email);
     
     return this.http.post<boolean>(this.sys_config.backend_cmm+"/legal-entities/"+profile.id,frmData,{
-      headers:this.getHeader()
+      headers:this.getHeaderPost()
     });
   }
 
@@ -55,7 +55,7 @@ export class ProfileService extends MyHttp {
     }
       params = params.set("list_all",options.list_all);
     var url = this.sys_config.backend_cmm+"/legal-entities/";
-    return this.http.get<UserResponse>(url,{
+    return this.http.get<EntityResponse>(url,{
       headers: this.getHeader(),
       params: params
     });
