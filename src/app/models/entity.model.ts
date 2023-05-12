@@ -2,10 +2,16 @@ export interface Entity {
 }
 import { Paginate } from "./paginate.model"
 
+export enum EntityType{
+    C = "C",
+    R = "R",
+    S = "S"
+}
+
 export interface Entity {
     id:number | undefined,
     username:string,
-    type:string,
+    type:EntityType,
     active: boolean
     password: string | undefined,
     date_created: string | undefined,
