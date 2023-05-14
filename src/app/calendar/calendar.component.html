@@ -1,1 +1,21 @@
-<p>calendar works!</p>
+<body id="body-pd">
+  <header class="header d-flex display-content-end" id="header">
+    <div class="header_toggle">&nbsp;</div>
+    <div class="flex-shrink-0 dropdown" style="max-width: 40px!important;">
+      <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://github.com/evertonrivas.png" alt="Everton Rivas" width="32" height="32" class="rounded-circle">
+      </a>
+      <ul class="dropdown-menu text-small shadow">
+        <li><a class="dropdown-item" [routerLink]="['/admin/profile']"><span class="material-symbols-outlined align-middle">&#xe853;</span> Perfil</a></li>
+        <li><a class="dropdown-item" [routerLink]="['/selector']"><span class="material-symbols-outlined align-middle">deployed_code</span> Trocar módulo</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a href="javascript:void(0);" class="dropdown-item" (click)="logout()"><span class="material-symbols-outlined">&#xe9ba;</span> Sair</a></li>
+      </ul>
+    </div>
+</header>
+     <!--Container Main start-->
+    <div class="height-100 bg-light">
+        <router-outlet></router-outlet>
+    </div>
+    <!--Container Main end-->
+  </body>
