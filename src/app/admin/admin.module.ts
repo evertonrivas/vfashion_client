@@ -16,6 +16,7 @@ import { CnpjCpfPipe } from '../pipes/cnpj-cpf.pipe';
 import { EntityTypePipe } from '../pipes/entity-type.pipe';
 import { UserTypePipe } from '../pipes/user-type.pipe';
 import { NameCutPipe } from '../pipes/name-cut.pipe';
+import { ShortMoneyPipe } from '../pipes/short-money.pipe';
 import { ProfileComponent } from './profile/profile.component';
 
 registerLocaleData(ptBr)
@@ -31,6 +32,7 @@ registerLocaleData(ptBr)
     EntityTypePipe,
     UserTypePipe,
     NameCutPipe,
+    ShortMoneyPipe,
     ProfileComponent
   ],
   imports: [
@@ -46,7 +48,8 @@ registerLocaleData(ptBr)
     CnpjCpfPipe,
     EntityTypePipe,
     UserTypePipe,
-    NameCutPipe
+    NameCutPipe,
+    ShortMoneyPipe
   ],
   providers:[
     {
