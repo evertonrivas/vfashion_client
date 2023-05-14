@@ -11,7 +11,7 @@
                         <h5>Valor em Pedidos</h5>
                     </div>
                     <div class="d-flex justify-content-start"><span class="text-secondary">Última coleção</span></div>
-                    <h1>{{totalValueOrder}}</h1>
+                    <h1>{{totalValueOrder | shortMoney}}</h1>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="row pt-4">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
                     <div class="d-flex justify-content-start">
@@ -65,14 +65,44 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-flex justify-content-start">
-                        <span class="material-symbols-outlined text-primary">calendar_month</span>&nbsp;
-                        <h5>Calendário de Vendas</h5>
+                        <span class="material-symbols-outlined text-primary">monetization_on</span>&nbsp;
+                        <h5>Total Última Coleção</h5>
                     </div>
-                    &nbsp;
+                    <div echarts [options]="chartLastSell"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-start">
+                        <span class="material-symbols-outlined text-primary">calendar_month</span>&nbsp;
+                        <h5>Calendário</h5>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md justify-content-center text-center">&Uacute;ltima Cole&ccedil;&atilde;o</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md">VD: <small>01/01/2023 - 01/02/2023</small></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md">FT: <small>01/03/2023 - 01/04/2023</small></div>
+                    </div>
+                    <div class="row ps-2 pe-2 pt-3"><hr size="1"/></div>
+                    <div class="row">
+                        <div class="col-md justify-content-center text-center">Pr&oacute;xima Cole&ccedil;&atilde;o</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md">VD: <small>01/06/2023 - 01/07/2023</small></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md">FT: <small>01/08/2023 - 01/09/2023</small></div>
+                    </div>
                 </div>
             </div>
         </div>
