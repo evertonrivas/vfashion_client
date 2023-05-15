@@ -1,4 +1,5 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHandler, HttpHeaders, HttpParams } from "@angular/common/http";
+import * as configData from 'src/assets/config.json';
 
 export enum ContentType {
     text = 0,
@@ -7,6 +8,7 @@ export enum ContentType {
 }
 
 export class MyHttp {
+    sys_config:any = (configData as any).default;
     constructor(protected http:HttpClient){
 
     }

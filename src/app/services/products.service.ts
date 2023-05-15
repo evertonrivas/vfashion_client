@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as configData from 'src/assets/config.json';
 import { GalleryOptions, ResponseProduct,ProductStock, Product } from 'src/app/models/product.model';
 import { MyHttp } from './my-http';
 
@@ -9,8 +8,6 @@ import { MyHttp } from './my-http';
   providedIn: 'root'
 })
 export class ProductsService extends MyHttp{
-  sys_config:any = (configData as any).default;
-
   constructor(http:HttpClient) { 
     super(http);
   }

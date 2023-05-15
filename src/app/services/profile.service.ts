@@ -4,15 +4,12 @@ import { User,UserOptions,UserResponse } from '../models/user.model';
 import { MyHttp } from './my-http';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as configData from 'src/assets/config.json';
 import { Entity, EntityOptions, EntityResponse } from '../models/entity.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService extends MyHttp {
-  sys_config:any = (configData as any).default;
-
   constructor(http:HttpClient) {
     super(http);
   }

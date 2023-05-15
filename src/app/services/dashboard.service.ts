@@ -9,7 +9,6 @@ import { EntityType } from '../models/entity.model';
   providedIn: 'root'
 })
 export class DashboardService extends MyHttp{
-  sys_config:any = (configData as any).default;
   constructor(http:HttpClient) {
     super(http);
    }

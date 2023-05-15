@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable,Subject } from 'rxjs';
 import { MyHttp, ContentType } from './my-http';
 import { CartContent, CartItem, HistoryOptions, PaginativeHistory, PaymentCondition } from 'src/app/models/order.model';
-import * as configData from 'src/assets/config.json';
 import { Product } from 'src/app/models/product.model';
 
 
@@ -11,7 +10,6 @@ import { Product } from 'src/app/models/product.model';
   providedIn: 'root'
 })
 export class OrderService extends MyHttp{
-  sys_config:any = (configData as any).default;
   private productAnnouced = new Subject<any|null>();
 
   productAnnouced$ = this.productAnnouced.asObservable();

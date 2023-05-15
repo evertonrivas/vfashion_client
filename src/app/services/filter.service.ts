@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import * as configData from 'src/assets/config.json';
 import { ProductCategory, ProductCollection, B2bBrand, ProductType, ProductModel, Size, Color } from 'src/app/models/product.model';
 import { Filter } from '../models/filter.model';
 import { MyHttp } from './my-http';
@@ -10,7 +9,6 @@ import { MyHttp } from './my-http';
   providedIn: 'root'
 })
 export class FilterService extends MyHttp{
-  sys_config:any = (configData as any).default;
   private filterAnnouced = new Subject<Filter>();
 
   filterAnnouced$ = this.filterAnnouced.asObservable();
