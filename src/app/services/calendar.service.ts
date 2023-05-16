@@ -13,8 +13,8 @@ export class CalendarService extends MyHttp{
     super(http);
   }
 
-  calendarLoad(options:CalendarOptions):Observable<Calendar>{
-    return this.http.get<Calendar>(this.sys_config.backend_scm+'/calendar',{
+  calendarLoad(options:CalendarOptions):Observable<Calendar[]>{
+    return this.http.get<Calendar[]>(this.sys_config.backend_scm+'/calendar/',{
       headers: this.getHeader(),
       params: new HttpParams().set("query",options.search)
     });
