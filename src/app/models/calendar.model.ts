@@ -1,7 +1,11 @@
+export interface Months{
+    position: string,
+    weeks: number[]
+}
+
 export interface Calendar{
     year: number,
-    month: number,
-    week: number
+    months: Months[]
 }
 
 export interface CalendarOptions{
