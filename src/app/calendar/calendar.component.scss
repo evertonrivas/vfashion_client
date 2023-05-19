@@ -1,18 +1,21 @@
-body{
+html, body { height: 100%; overflow: hidden!important; }
+
+#mainContent{
   position: relative;
-  margin: var(--header-height) 0 0 0;
+  margin: calc(var(--header-height) + 2rem) 0 0 0;
   padding: 0 1rem;
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
-  transition: .5s
+  transition: .5s;
 }
 
 a{
   text-decoration: none
 }
+
 .header{
   width: 100%;
-  height: var(--header-height);
+  height: calc(var(--header-height) + 1rem);
   position: fixed;
   top: 0;
   left: 0;
@@ -20,7 +23,7 @@ a{
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
-  background-color: var(--white-color);
+  background-color: #6f42c1;
   z-index: var(--z-fixed);
   transition: .5s
 }
@@ -54,7 +57,8 @@ a{
     border: var(--bs-border-width) solid var(--bs-border-color);
   }
   
+  /*
   .body{
     padding-top: 4.5rem!important;
-  }
+  }*/
   
