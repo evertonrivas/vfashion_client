@@ -18,6 +18,7 @@ import { UserTypePipe } from '../pipes/user-type.pipe';
 import { NameCutPipe } from '../pipes/name-cut.pipe';
 import { ShortMoneyPipe } from '../pipes/short-money.pipe';
 import { ProfileComponent } from './profile/profile.component';
+import { NgxColorsModule } from 'ngx-colors';
 
 registerLocaleData(ptBr)
 
@@ -40,6 +41,7 @@ registerLocaleData(ptBr)
     AdminRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxColorsModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     })
