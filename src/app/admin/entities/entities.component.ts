@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { DataManipulation } from '../datamanipulation';
-import { Entity, EntityOptions } from 'src/app/models/entity.model';
+import { DataManipulation } from 'src/app/datamanipulation';
+import { Entity, EntityOptions, EntityType } from 'src/app/models/entity.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ToastrService } from 'ngx-toastr';
@@ -19,10 +19,12 @@ export class EntitiesComponent extends DataManipulation{
     orderBy: null,
     orderDir: 'ASC',
     search: null,
-    export: false
+    list_all: false
   };
   massiveType:string = "";
-  massiveStatus:string = "";
+  massiveCoutry:string = "";
+  massiveState:string = "";
+  massiveCity:string = "";
 
   frmUser:FormGroup = new FormGroup({
     txtUsername: new FormControl('',Validators.required),
@@ -36,7 +38,11 @@ export class EntitiesComponent extends DataManipulation{
   }
 
   ngOnDestroy(): void {
-    this.serviceSub.unsubscribe();
+    this.serviceSub[0].unsubscribe();
+    this.serviceSub[1].unsubscribe();
+    this.serviceSub[2].unsubscribe();
+    this.serviceSub[3].unsubscribe();
+    this.serviceSub[4].unsubscribe();
   }
 
   ngOnInit(): void {
@@ -44,7 +50,7 @@ export class EntitiesComponent extends DataManipulation{
   }
 
   loadData():void{
-    this.serviceSub = this.svc.profileList(this.options).subscribe({
+    this.serviceSub[0] = this.svc.profileList(this.options).subscribe({
       next: data => {
         this.response = data;
         (this.response.data as Entity[]).forEach((usr) =>{
@@ -110,8 +116,8 @@ export class EntitiesComponent extends DataManipulation{
 
   exportCSV(all:boolean = false): void {
     if(all){
-      this.serviceSub = this.svc.userList({
-        export: true,
+      this.serviceSub[1] = this.svc.userList({
+        list_all: true,
         orderBy: "id",
         orderDir: 'ASC',
         page: 0,
@@ -121,7 +127,7 @@ export class EntitiesComponent extends DataManipulation{
         this.exportFile(data,"C");
       });
     }else{
-      this.serviceSub = this.svc.userList(this.options).subscribe((data) =>{
+      this.serviceSub[1] = this.svc.userList(this.options).subscribe((data) =>{
         this.exportFile(data.data,"C");
       });
     }
@@ -129,8 +135,8 @@ export class EntitiesComponent extends DataManipulation{
 
   exportJSON(all:boolean = false): void {
     if(all){
-      this.serviceSub = this.svc.userList({
-        export: true,
+      this.serviceSub[2] = this.svc.userList({
+        list_all: true,
         orderBy: "id",
         orderDir: 'ASC',
         page: 0,
@@ -140,7 +146,7 @@ export class EntitiesComponent extends DataManipulation{
         this.exportFile(data,"J");
       });
     }else{
-      this.serviceSub = this.svc.userList(this.options).subscribe((data)=>{
+      this.serviceSub[2] = this.svc.userList(this.options).subscribe((data)=>{
         this.exportFile(data.data,"J");
       });
     }
@@ -170,7 +176,7 @@ export class EntitiesComponent extends DataManipulation{
   }
 
   save(usrs:Entity[]):void{
-    this.serviceSub = this.svc.userSave(usrs).subscribe({
+    this.serviceSub[3] = this.svc.userSave(usrs).subscribe({
       next: data =>{
         if (data)
           this.toastr.success("Usuário(s) salvo(s) com sucesso!");
@@ -221,12 +227,10 @@ export class EntitiesComponent extends DataManipulation{
         (this.response.data as Entity[]).forEach((usr) =>{
           if (usr.id!=undefined && usr.id == parseInt(v)){
 
-            let status = (this.massiveStatus!="")?((this.massiveStatus=="2")?false:true):usr.active;
-
             let u:Entity = {
               id : usr.id,
-              active: status,
-              type: (this.massiveType!="")?this.massiveType:usr.type,
+              active: false,
+              type: (this.massiveType!="")?this.massiveType as EntityType:usr.type,
               date_created:undefined,
               date_updated:undefined,
               password:undefined,
@@ -238,7 +242,7 @@ export class EntitiesComponent extends DataManipulation{
       }
     });
 
-    this.serviceSub = this.svc.userMassive(usrs).subscribe((data)=>{
+    this.serviceSub[4] = this.svc.userMassive(usrs).subscribe((data)=>{
       if(data){
         this.toastr.success("Usuário(s) atualizado(s) com sucesso!");
         this.totalToChange = 0;
@@ -259,9 +263,9 @@ export class EntitiesComponent extends DataManipulation{
       }
     });
     if (this.totalToChange==1){
-      this.msgMassive = 'Deseja realmente executar ação no registro selecionado?';
+      this.message = 'Deseja realmente executar ação no registro selecionado?';
     }else{
-      this.msgMassive = 'Deseja realmente executar ação massiva em todos os registros selecionados?';
+      this.message = 'Deseja realmente executar ação massiva em todos os registros selecionados?';
     }
     if (this.totalToChange > 0 ){
       this.modal.show();
@@ -271,7 +275,13 @@ export class EntitiesComponent extends DataManipulation{
     }
   }
 
+  onExecuteFilter():void{
+    this.options.search = "";
+    
+  }
+
   onSearch():void{
+    this.options.search = 'is:query '+this.searchTerm;
     this.loadData();
   }
 }
