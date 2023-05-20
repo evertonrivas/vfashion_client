@@ -1,0 +1,186 @@
+<div class="container-fluid">
+    <!--header bar-->
+    <div class="d-flex justify-content-end p-1 gantt-topbar">
+        <div class="btn-group">
+            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Novo Evento" (click)="onNew()"><span class="material-symbols-outlined align-middle">add_task</span></button>
+            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Novo Marco" (click)="onNew()"><span class="material-symbols-outlined align-middle">flag_circle</span></button>
+            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Excluir Selecionado(s)"><span class="material-symbols-outlined align-middle">delete</span></button>
+            <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Exportar">
+                <button type="button" class="btn  btn-outline-secondary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="material-symbols-outlined">download</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportCSV()">CSV</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportJSON()">JSON</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--end header bar-->
+    <div class="d-flex" id="gantt-content">
+        <as-split direction="horizontal" unit="pixel" [gutterSize]="7" style="max-height: 440px!important;">
+            <as-split-area [size]="280">
+                <div id="gantt-left">
+                    <div id="gantt-header-left">
+                        <table class="table table-sm table-bordered table-gantt">
+                            <thead class="gantt-group-divider">
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                <tr>
+                                    <th class="td-checkbox">
+                                        <input type="checkbox" role="switch" class="form-check-input" (change)="checkUncheckAll()" [(ngModel)]="masterChecked" id="flexSwitchCheckDefault">
+                                    </th>
+                                    <th><small>Evento</small></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="gantt-body-left" #scrollOne (mouseenter)="updateCurrentElement('scrollOne')" (scroll)="updateVerticalScroll($event)">
+                        <table class="table table-sm table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="gantt-td-milestone"></td>
+                                </tr>
+                                <tr *ngFor="let event of eventsCalendar">
+                                    <td class="td-checkbox">
+                                        <input type="checkbox" class="form-check-input" [(ngModel)]="registryChecked[event.id]" id="flexSwitchCheckDefault">
+                                    </td>
+                                    <td class="gantt-td-event"><small>{{event.name}}</small></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </as-split-area>
+            <as-split-area>
+                <div id="gantt-right">
+                    <div id="gantt-header-right">
+                        <table class="table table-sm table-bordered table-gantt">
+                            <thead class="gantt-group-divider">
+                                <tr>
+                                    <ng-container *ngFor="let cal of response.data">
+                                        <ng-container *ngFor="let month of cal.months">
+                                            <th [attr.colspan]="month.weeks.length" class="text-center"><small>{{getMonthName(month.position)}}/{{cal.year}}</small></th>
+                                        </ng-container>
+                                    </ng-container>
+                                </tr>
+                                <tr>
+                                    <ng-container *ngFor="let year of response.data">
+                                        <ng-container *ngFor="let month of year.months">
+                                            <ng-container *ngFor="let week of month.weeks">
+                                                <td class="text-center gantt-td-content"><small>{{week}}</small></td>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="gantt-body-right" #scrollTwo (mouseenter)="updateCurrentElement('scrollTwo')" (scroll)="updateVerticalScroll($event)">
+                        <table class="table table-sm table-bordered">
+                            <tbody>
+                                <tr>
+                                    <ng-container *ngFor="let cal of response.data">
+                                        <td *ngFor="let w of totalWeeks[cal.year]" class="gantt-td-milestone">
+                                            <ng-container *ngFor="let mile of milestones">
+                                                <app-milestone *ngIf="w==mile.start_week && mile.year==cal.year" [ComponentColor]="mile.type.hex_color" [ComponentSize]="((eventsCalendar.length+1)*30)" [EventName]="mile.name"></app-milestone>
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                                <tr *ngFor="let event of eventsCalendar" class="row-content">
+                                    <ng-container *ngFor="let cal of response.data">
+                                        <td *ngFor="let w of totalWeeks[cal.year]" class="gantt-td-content">
+                                            <a href="javascript:void()" *ngIf="w==event.start_week && event.year==cal.year" >
+                                                <app-event [ComponentSize]="(((event.end_week-event.start_week)+1)*30)-2" [ComponentColor]="event.type.hex_color" [ComponentCollection]="event.collection.name" [ComponentBrand]="event.collection.brand.name"></app-event>
+                                            </a>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </as-split-area>
+        </as-split>
+    </div>
+</div>
+
+<!--Offcanvas para criação e atualização de Evento-->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEdit" aria-labelledby="offcanvasEditLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasEditLabel">Edição de Evento</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <form (ngSubmit)="onSubmit()" [formGroup]="frmCal" novalidate class="needs-validation">
+        <div class="row mb-2">
+            <div class="col-md">
+                <label for="slType">Tipo do Evento</label>
+                <select id="slType" class="form-select form-select-sm" formControlName="slType" [ngClass]="{'is-invalid': hasSend && frmCal.controls['slType'].invalid }" required (change)="onChangeType()" [(ngModel)]="selectedEventType.id">
+                    <option value="">&laquo; Selecione &raquo;</option>
+                    <option *ngFor="let evt of eventType" [value]="evt.id">{{evt.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2" *ngIf="showEventTypeCollection">
+            <div class="col-md">
+                <label for="">Coleção</label>
+                <select id="slCollection" class="form-select form-select-sm" formControlName="slCollection">
+                    <option value="">&laquo; Selecione &raquo;</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md">
+                <label for="txtUsername">Nome</label>
+                <input type="text" class="form-control form-control-sm" id="txtName" formControlName="txtName" [ngClass]="{'is-invalid': hasSend && frmCal.controls['txtName'].invalid }" required>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md">
+                <label for="txtPassword">De</label>
+                <input type="date" class="form-control form-control-sm" formControlName="dtInicio" [ngClass]="{'is-invalid': hasSend && frmCal.controls['dtInicio'].invalid }" required>
+            </div>
+            <div class="col-md">
+                <label for="txtFim">At&eacute;</label>
+                <input type="date" class="form-control form-control-sm" formControlName="dtFim" [ngClass]="{'is-invalid': hasSend && frmCal.controls['dtFim'].invalid }" required>
+            </div>
+        </div>
+        <div class="row mb-2" *ngIf="showEventTypeBudget">
+            <div class="col-md">
+                <label for="txtBudget">Orçamento</label>
+                <input type="text" class="form-control form-control-sm" id="txtBudget" mask="separator" thousandSeparator="." formControlName="txtBudget" [ngClass]="{'is-invalid': hasSend && frmCal.controls['txtName'].invalid && showEventTypeBudget}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <button type="button" class="btn btn-sm btn-danger w-100" data-bs-dismiss="offcanvas">Cancelar</button>
+            </div>
+            <div class="col-md">
+                <button type="submit" class="btn btn-sm btn-primary w-100" [ngClass]="hasSend?'disabled':''">Salvar</button>
+            </div>
+        </div>
+      </form>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_massive" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Confirmação de execução</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>{{message}}</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+            <!-- <button type="button" class="btn btn-primary" (click)="onChangeMassive()">Sim</button> -->
+        </div>
+        </div>
+    </div>
+</div>

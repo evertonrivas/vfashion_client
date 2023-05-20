@@ -1,0 +1,87 @@
+.gantt-topbar{
+    background-color: #f5f5f5; 
+    border: 1px solid #dee2e6; 
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom: none!important;
+}
+
+#gantt-content{
+    border-top: none!important;
+    border:1px solid #dee2e6;
+    max-height: 440px!important;
+}
+
+#gantt-left{
+    overflow: unset!important;
+}
+
+#gantt-header-left{
+    max-height: 70px!important;
+    overflow: hidden!important;
+}
+
+#gantt-body-left{
+    max-height: 370px!important;
+    overflow-x: auto!important;
+    //com rolagem
+}
+
+#gantt-right{
+    max-height: 440px!important;
+    overflow-x: scroll!important;
+    overflow-y: hidden!important;
+}
+
+#gantt-header-right{
+    max-height: 70px!important;
+    width: max-content;
+    overflow-x: hidden!important;
+    width: max-content!important;
+}
+
+#gantt-body-right{
+    width: max-content;
+    max-height: 370px!important;
+    overflow-y:auto!important;
+    overflow-x: hidden!important;
+}
+
+.gantt-group-divider{
+    border-bottom: 2px solid currentColor!important;
+}
+
+#gantt-right{
+    overflow-y: auto;
+}
+
+.as-split-gutter {
+	height: revert !important;
+}
+
+.gantt-td-content{
+    min-width: 30px!important;
+    max-width: 30px!important;
+    max-height: 40px!important;
+    min-height: 35px!important;
+    padding-left: 1px!important;
+    padding-right: 1px!important;
+    position: relative;
+}
+
+.gantt-td-milestone{
+    position:relative!important;
+    height: -1px!important;
+    min-width: 30px;
+    max-width: 30px;
+    padding: 0px!important;
+    border: none!important;
+}
+
+.table-gantt{
+    margin-bottom: 0!important;
+}
+
+.td-checkbox{
+    width: 30px!important;
+}
