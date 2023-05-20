@@ -1,0 +1,66 @@
+.gantt-milestone{
+    border-right: 2px dashed;
+    width: 15px;
+    z-index: 1000;
+    top: 0px;
+    position: absolute;
+}
+
+.label{
+    white-space: nowrap;
+    opacity: 60%;
+    margin-left: 15px!important;
+    text-align: left!important;
+    position: absolute;
+    z-index: 1001;
+    height: 28px!important;
+    padding-left:3px!important;
+    padding-right:3px!important;
+    top: 0px!important;
+    color:#FFFFFF;
+    font-weight: bold;
+    font-size: 12px!important;
+    padding-top: 3px;
+}
+/*
+.gantt-arrow-right{
+    border-bottom: 5px solid rgba(0,0,0,0);
+    border-right: 5px solid;
+    border-top: 5px solid rgba(0,0,0,0);
+    height: 0;
+    width: 0;
+    position: absolute;
+    margin-left: 15px!important;
+    border-right-color: #fff3cd!important;
+    border-left-color: #fff3cd!important;
+    top: 60px!important;
+}
+
+.gantt-diamond{
+    border-bottom: 5px solid rgba(0,0,0,0);
+    border-right: 5px solid rgba(0,0,0,0);
+    border-left: 5px solid rgba(0,0,0,0);
+    border-top: 5px solid;
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin-left: 10px;
+    top: 4px!important;
+}
+.gantt-diamond-line{
+    border-top:4px solid;
+    width: 30px;
+    height: 1px;
+    position: absolute;
+}
+*/
+/*.gantt-diamond:after{
+    content: '';
+    position: absolute;
+    border: 5px solid rgba(0,0,0,0);
+    border-top: 5px solid;
+    width: 0;
+    height: 0;
+    left:-5px;
+    top:5px;
+}*/
