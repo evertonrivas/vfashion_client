@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class EventComponent {
   @Input() ComponentSize:number = 0;
   @Input() ComponentColor:string = "";
-  @Input() ComponentCollection:string = "";
-
+  @Input() ComponentCollection:string | null = null;
+  @Input() ComponentBrand:string|null = null;
   constructor(){}
 }
