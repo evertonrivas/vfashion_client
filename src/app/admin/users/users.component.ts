@@ -1,5 +1,5 @@
 import { Component,AfterViewInit, OnInit, OnDestroy } from '@angular/core';
-import { DataManipulation } from '../datamanipulation';
+import { DataManipulation } from 'src/app/datamanipulation';
 import { User, UserOptions } from 'src/app/models/user.model';
 import { ProfileService } from 'src/app/services/profile.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -46,7 +46,11 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
   }
 
   ngOnDestroy(): void {
-    this.serviceSub.unsubscribe();
+    this.serviceSub[0].unsubscribe();
+    this.serviceSub[1].unsubscribe();
+    this.serviceSub[2].unsubscribe();
+    this.serviceSub[3].unsubscribe();
+    this.serviceSub[4].unsubscribe();
   }
 
   ngOnInit(): void {
@@ -54,7 +58,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
   }
 
   loadData():void{
-    this.serviceSub = this.svc.userList(this.options).subscribe({
+    this.serviceSub[0] = this.svc.userList(this.options).subscribe({
       next: data => {
         this.response = data;
         (this.response.data as User[]).forEach((usr) =>{
@@ -107,7 +111,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
 
   exportCSV(all:boolean = false): void {
     if(all){
-      this.serviceSub = this.svc.userList({
+      this.serviceSub[1] = this.svc.userList({
         list_all: true,
         orderBy: "id",
         orderDir: 'ASC',
@@ -118,7 +122,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
         this.exportFile(data,"C");
       });
     }else{
-      this.serviceSub = this.svc.userList(this.options).subscribe((data) =>{
+      this.serviceSub[1] = this.svc.userList(this.options).subscribe((data) =>{
         this.exportFile(data.data,"C");
       });
     }
@@ -126,7 +130,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
 
   exportJSON(all:boolean = false): void {
     if(all){
-      this.serviceSub = this.svc.userList({
+      this.serviceSub[2] = this.svc.userList({
         list_all: true,
         orderBy: "id",
         orderDir: 'ASC',
@@ -137,7 +141,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
         this.exportFile(data,"J");
       });
     }else{
-      this.serviceSub = this.svc.userList(this.options).subscribe((data)=>{
+      this.serviceSub[2] = this.svc.userList(this.options).subscribe((data)=>{
         this.exportFile(data.data,"J");
       });
     }
@@ -167,7 +171,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
   }
 
   save(usrs:User[]):void{
-    this.serviceSub = this.svc.userSave(usrs).subscribe({
+    this.serviceSub[3] = this.svc.userSave(usrs).subscribe({
       next: data =>{
         if (data)
           this.toastr.success("Usuário(s) salvo(s) com sucesso!");
@@ -235,7 +239,7 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
       }
     });
 
-    this.serviceSub = this.svc.userMassive(usrs).subscribe((data)=>{
+    this.serviceSub[4] = this.svc.userMassive(usrs).subscribe((data)=>{
       if(data){
         this.toastr.success("Usuário(s) atualizado(s) com sucesso!");
         this.totalToChange = 0;
@@ -256,9 +260,9 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
       }
     });
     if (this.totalToChange==1){
-      this.msgMassive = 'Deseja realmente executar ação no registro selecionado?';
+      this.message = 'Deseja realmente executar ação no registro selecionado?';
     }else{
-      this.msgMassive = 'Deseja realmente executar ação massiva em todos os registros selecionados?';
+      this.message = 'Deseja realmente executar ação massiva em todos os registros selecionados?';
     }
     if (this.totalToChange > 0 ){
       this.modal.show();
