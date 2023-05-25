@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SecurityService } from '../services/security.service';
 import { Auth } from '../models/auth.model';
 import { Router } from '@angular/router';
-import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import * as configData from 'src/assets/config.json';
@@ -25,7 +24,6 @@ export class LoginComponent implements OnInit{
     id_user:0,
     id_profile: 0
   };
-  faRightToBracket = faRightToBracket;
   company_logo:string;
 
   frmLogin = new FormGroup({
