@@ -9,4 +9,5 @@ export class MilestoneComponent {
   @Input() ComponentColor:string = "";
   @Input() ComponentSize:number = 0;
   @Input() EventName:string = "";
+  @Input() DateStart:string = "";
 }
