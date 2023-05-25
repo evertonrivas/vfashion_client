@@ -10,6 +10,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskPipe, NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { NgxColorsModule } from 'ngx-colors';
 import { MilestoneComponent } from './milestone/milestone.component';
+import { EventFormComponent } from './event-form/event-form.component';
+import { MilestoneFormComponent } from './milestone-form/milestone-form.component';
+import { AngularMyDatePickerModule } from 'trade-datepicker';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +21,9 @@ import { MilestoneComponent } from './milestone/milestone.component';
     CalendarComponent,
     GanttComponent,
     EventComponent,
-    MilestoneComponent
+    MilestoneComponent,
+    EventFormComponent,
+    MilestoneFormComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +33,9 @@ import { MilestoneComponent } from './milestone/milestone.component';
     ReactiveFormsModule,
     NgxMaskPipe, 
     NgxMaskDirective,
-    NgxColorsModule
+    NgxColorsModule,
+    AngularMyDatePickerModule,
+    SharedModule
   ],
   providers:[
     provideNgxMask()
