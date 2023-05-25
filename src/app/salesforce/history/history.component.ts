@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderHistory,PaginativeHistory, HistoryOptions } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order.service';
-import { faDolly } from '@fortawesome/free-solid-svg-icons';
 
 declare var window:any;
 
@@ -11,7 +10,6 @@ declare var window:any;
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit{
-  faDolly = faDolly;
   myHistory:PaginativeHistory = {
     pagination: {
       has_next:false,

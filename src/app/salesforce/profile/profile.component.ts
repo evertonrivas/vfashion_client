@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
-import { faSave,faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Profile } from 'src/app/models/profile.model';
@@ -28,8 +27,6 @@ export class ProfileComponent implements OnInit {
     date_created: "",
     trash: false
   };
-  faSave = faSave;
-  faRotateLeft = faRotateLeft;
 
   frmProfile = new FormGroup({
     txtName: new FormControl('',Validators.required),

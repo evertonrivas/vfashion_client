@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { CartColor, CartContent, CartSize } from 'src/app/models/order.model';
-import { faTruckArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-cart',
@@ -10,7 +9,6 @@ import { faTruckArrowRight } from '@fortawesome/free-solid-svg-icons';
 })
 export class CartComponent  implements OnInit{
   content:CartContent[] = [];
-  faTruckArrowRight = faTruckArrowRight;
   myTotal:number = 0;
   myItens:number = 0;
   constructor(private sOrder:OrderService){

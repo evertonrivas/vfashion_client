@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { FilterService } from 'src/app/services/filter.service';
 import { ProductCategory, ProductCollection, B2bBrand, ProductType, ProductModel, Size, Color } from 'src/app/models/product.model';
@@ -14,7 +13,6 @@ import { Router } from '@angular/router';
 export class FilterComponent implements OnInit {
   @Output() filteredEvent = new EventEmitter<Filter>();
 
-  faFilter = faFilter;
   myfilter:Filter = {
     brand : [],
     categories : [],
