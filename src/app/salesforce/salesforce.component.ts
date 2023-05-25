@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { FilterService } from '../services/filter.service';
 import { Filter } from 'src/app/models/filter.model';
 import { OrderService } from '../services/order.service';
-import { faInstagram,faFacebook,faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import * as configData from 'src/assets/config.json';
 
 @Component({
@@ -22,9 +21,9 @@ export class SalesforceComponent implements OnDestroy, OnInit{
   private idTimer = 0;
   authSub:Subscription = new Subscription;
   totalInCart:number = 0;
-  faInstagram = faInstagram;
-  faFacebook = faFacebook;
-  faLinkedin = faLinkedin;
+  // faInstagram = faInstagram;
+  // faFacebook = faFacebook;
+  // faLinkedin = faLinkedin;
   company_logo:string;
 
   constructor(changeDetectorRef:ChangeDetectorRef, 
@@ -103,6 +102,9 @@ export class SalesforceComponent implements OnDestroy, OnInit{
             //colocar aqui o alerta de que o tempo esta acabando
           }
         }
+      },
+      error:() =>{
+        document.location.href="/";
       }
     });
   }
