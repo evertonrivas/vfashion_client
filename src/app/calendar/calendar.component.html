@@ -1,6 +1,17 @@
 <div id="mainContent">
-  <header class="header d-flex display-content-end" id="header">
-    <div class="header_toggle">&nbsp;</div>
+  <header class="header d-flex display-content-start" id="header">
+    <div class="header_toggle">
+      <a href="#" [routerLink]="['/calendar/dashboard']" class="text-light pe-1">
+      <span class="material-symbols-outlined">
+        dashboard
+        </span>
+      </a>
+      <a href="#" [routerLink]="['/calendar/chart']" class="text-light pe-1">
+        <span class="material-symbols-outlined">
+          calendar_month
+        </span>
+      </a>
+    </div>
     <div class="flex-shrink-0 dropdown" style="max-width: 40px!important;">
       <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="https://github.com/evertonrivas.png" alt="Everton Rivas" width="32" height="32" class="rounded-circle">
