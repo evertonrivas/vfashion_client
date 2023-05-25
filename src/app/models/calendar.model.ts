@@ -30,7 +30,8 @@ export interface CalendarEventType{
     hex_color:string,
     has_budget:boolean,
     use_collection:boolean,
-    is_milestone:boolean
+    is_milestone:boolean,
+    children: CalendarEventType[]
 }
 
 export interface CalendarEvent{
@@ -38,10 +39,13 @@ export interface CalendarEvent{
     name:string,
     start_week:number,
     end_week:number,
+    start_date:string,
+    end_date:string,
     type: CalendarEventType,
     year:number,
     budget_value:number | null,
-    collection: Collection
+    collection: Collection,
+    children: CalendarEvent[]
 }
 
 export interface CalendarEventData{
