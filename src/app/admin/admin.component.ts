@@ -48,6 +48,9 @@ export class AdminComponent implements OnInit,OnDestroy{
             //colocar aqui o alerta de que o tempo esta acabando
           }
         }
+      },
+      error:() =>{
+        document.location.href="/";
       }
     });
   }
