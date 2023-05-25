@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DATE_PIPE_DEFAULT_OPTIONS, registerLocaleData  } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { LOCALE_ID, DEFAULT_CURRENCY_CODE } from '@angular/core';
 import ptBr from '@angular/common/locales/pt';
@@ -43,7 +42,6 @@ import { CatalogComponent } from './catalog/catalog.component';
   imports: [
     CommonModule,
     FormsModule,
-    FontAwesomeModule,
     ReactiveFormsModule,
     NgSelectModule,
     SalesforceRoutingModule,
