@@ -85,3 +85,10 @@
 .td-checkbox{
     width: 30px!important;
 }
+
+.text-toogle[aria-expanded=false] .text-expanded {
+    display: none;
+}
+.text-toogle[aria-expanded=true] .text-collapsed {
+    display: none;
+}
