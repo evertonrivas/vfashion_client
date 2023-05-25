@@ -1,1 +1,4 @@
-<div class="event-object shadow-sm" [ngStyle]="{'backgroundColor': ComponentColor,'width.px':ComponentSize}">{{ComponentBrand}}{{ComponentBrand!=null?':':''}}{{ComponentCollection}}</div>
+<div class="event-object shadow-sm text-center fw-bold" [ngStyle]="{'backgroundColor': ComponentColor,'width.px':ComponentSize}">
+    <span *ngIf="ComponentCollection!=null">{{ComponentBrand}}{{ComponentBrand!=null?':':''}}{{ComponentCollection}}</span>
+    <span *ngIf="ComponentCollection==null">{{ComponentDateStart}} : {{ComponentDateEnd}}</span>
+</div>

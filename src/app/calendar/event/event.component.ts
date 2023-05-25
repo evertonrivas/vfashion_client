@@ -10,5 +10,7 @@ export class EventComponent {
   @Input() ComponentColor:string = "";
   @Input() ComponentCollection:string | null = null;
   @Input() ComponentBrand:string|null = null;
+  @Input() ComponentDateStart:string|null = null;
+  @Input() ComponentDateEnd: string|null = null;
   constructor(){}
 }
