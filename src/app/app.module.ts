@@ -7,19 +7,22 @@ import { NgOptimizedImage, provideImgixLoader } from '@angular/common';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
 import * as configData from '../assets/config.json';
 
+import { NgxEchartsModule } from 'ngx-echarts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './login/login.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SelectorComponent } from './selector/selector.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SelectorComponent
+    SelectorComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,10 @@ import { SelectorComponent } from './selector/selector.component';
       positionClass: 'toast-bottom-right',
       timeOut: 2000
     }),
-    FontAwesomeModule
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
+    SharedModule
   ],
   providers: [{
     provide: RECAPTCHA_V3_SITE_KEY,
