@@ -1,0 +1,42 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="frmMilestone" novalidate class="needs-validation">
+    <div class="row mb-2">
+        <div class="col-md">
+            <label for="slMilestoneType">Tipo do Evento</label>
+            <select id="slMilestoneType" class="form-select" formControlName="slMilestoneType" [ngClass]="{'is-invalid': (hasSend && frmMilestone.controls['slMilestoneType'].invalid) }" required [(ngModel)]="selectedEventType.id">
+                <option value="">&laquo; Selecione &raquo;</option>
+                <ng-container *ngFor="let evt of eventTypes">
+                    <option [value]="evt.id" *ngIf="evt.is_milestone==true">{{evt.name}}</option>
+                </ng-container>
+            </select>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md">
+            <label for="txtMilestoneName">Nome</label>
+            <input type="text" class="form-control" id="txtMilestoneName" formControlName="txtMilestoneName" [ngClass]="{'is-invalid': (hasSend && frmMilestone.controls['txtMilestoneName'].invalid) }" required>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md">
+            <label for="dtMilestoneStart">Data</label>
+            <div class="input-group me-2 has-validation">
+                <input class="form-control" name="dtMilestoneStart" placeholder="Selecione o período" 
+                    angular-mydatepicker #dp="angular-mydatepicker" 
+                    [options]="myDpOptions" [(ngModel)]="selectedDate" formControlName="dtMilestoneStart"
+                    (dateChanged)="onDateChanged($event)" locale="pt-br" readonly [ngClass]="{'is-invalid': hasSend && frmMilestone.controls['dtMilestoneStart'].invalid }" required/>
+                <button type="button" class="btn btn-outline-secondary" (click)="dp.toggleCalendar()">
+                    <span class="material-symbols-outlined icon-small align-middle">
+                        calendar_today
+                    </span>
+                </button>
+            </div>
+            <!-- <input type="date" class="form-control" formControlName="dtMilestoneStart" [ngClass]="{'is-invalid': hasSend && frmMilestone.controls['dtMilestoneStart'].invalid }" required> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md text-end">
+            <button type="button" class="btn btn-danger me-2" (click)="closeForm()"><span class="material-symbols-outlined align-middle">cancel</span> Cancelar</button>
+            <button type="submit" class="btn btn-primary" [ngClass]="hasSend && frmMilestone.invalid?'disabled':''"><span class="material-symbols-outlined align-middle">save</span> Salvar</button>
+        </div>
+    </div>
+</form>
