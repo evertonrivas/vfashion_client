@@ -1,18 +1,37 @@
 <div class="container-fluid">
     <!--header bar-->
     <div class="d-flex justify-content-end p-1 gantt-topbar">
-        <div class="btn-group">
-            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Novo Evento" (click)="onNewEvent()"><span class="material-symbols-outlined align-middle">add_task</span></button>
-            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Novo Marco" (click)="onNewMilestone()"><span class="material-symbols-outlined align-middle">flag_circle</span></button>
-            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Excluir Selecionado(s)"><span class="material-symbols-outlined align-middle">delete</span></button>
-            <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Exportar">
-                <button type="button" class="btn  btn-outline-secondary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="material-symbols-outlined">download</span>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="input-group input-group-sm me-2">
+                <input class="form-control" name="mydate" placeholder="Selecione o período" 
+                    angular-mydatepicker #dp="angular-mydatepicker" 
+                    [options]="myDpOptions" [(ngModel)]="selectedDate"
+                    (dateChanged)="onDateChanged($event)" locale="pt-br" readonly/>         
+                <button type="button" class="btn btn-outline-secondary" (click)="dp.toggleCalendar()">
+                    <span class="material-symbols-outlined icon-small align-middle">
+                        calendar_today
+                    </span>
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportCSV()">CSV</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportJSON()">JSON</a></li>
-                </ul>
+            </div>
+            <div class="btn-group btn-group-sm">
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Novo Evento" (click)="onNewEvent()">
+                    <span class="material-symbols-outlined align-middle icon-small">add_task</span>
+                </button>
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Novo Marco" (click)="onNewMilestone()">
+                    <span class="material-symbols-outlined align-middle icon-small">flag_circle</span>
+                </button>
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Excluir Selecionado(s)">
+                    <span class="material-symbols-outlined align-middle icon-small">delete</span>
+                </button>
+                <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Exportar">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="material-symbols-outlined icon-small">download</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportCSV()">CSV</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportJSON()">JSON</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -104,7 +123,10 @@
                                     <ng-container *ngFor="let cal of response.data">
                                         <td *ngFor="let w of totalWeeks[cal.year]" class="gantt-td-milestone">
                                             <ng-container *ngFor="let mile of milestones">
-                                                <app-milestone *ngIf="w==mile.start_week && mile.year==cal.year" [ComponentColor]="mile.type.hex_color" [ComponentSize]="((totalEventsDisplay)*30)" [EventName]="mile.name" [DateStart]="mile.start_date"></app-milestone>
+                                            <a href="javascript:void(0);" (click)="onEditMilestone(mile)" *ngIf="mile.id>0">
+                                                <app-milestone *ngIf="w==mile.start_week && mile.year==cal.year" [ComponentColor]="mile.type.hex_color" [ComponentSize]="((totalEventsDisplay)*30)" [EventName]="mile.name" [DateStart]="formatEventDate(mile.start_date)"></app-milestone>
+                                            </a>
+                                            <app-milestone *ngIf="w==mile.start_week && mile.year==cal.year && mile.id==0" [ComponentColor]="mile.type.hex_color" [ComponentSize]="((totalEventsDisplay)*30)" [EventName]="mile.name" [DateStart]="formatEventDate(mile.start_date)"></app-milestone>
                                             </ng-container>
                                         </td>
                                     </ng-container>
@@ -113,8 +135,8 @@
                                     <tr class="row-content">
                                         <ng-container *ngFor="let cal of response.data">
                                             <td *ngFor="let w of totalWeeks[cal.year]" class="gantt-td-content">
-                                                <a href="javascript:void();" *ngIf="w==event.start_week && event.year==cal.year" class="text-decoration-none link-light">
-                                                    <app-event [ComponentSize]="(((event.end_week-event.start_week)+1)*30)-2" [ComponentColor]="event.type.hex_color" [ComponentCollection]="event.collection.name" [ComponentBrand]="event.collection.brand.name" [ComponentDateStart]="event.start_date" [ComponentDateEnd]="event.end_date"></app-event>
+                                                <a href="javascript:void(0);" *ngIf="w==event.start_week && event.year==cal.year" class="text-decoration-none link-light">
+                                                    <app-event [ComponentSize]="(((event.end_week-event.start_week)+1)*30)-2" [ComponentColor]="event.type.hex_color" [ComponentCollection]="event.collection.name" [ComponentBrand]="event.collection.brand.name" [ComponentDateStart]="formatEventDate(event.start_date)" [ComponentDateEnd]="formatEventDate(event.end_date)"></app-event>
                                                 </a>
                                             </td>
                                         </ng-container>
@@ -123,7 +145,7 @@
                                         <tr [ngClass]="event.children.length>0?'accordion-collapse collapse':''" [id]="'collapse'+event.id">
                                             <ng-container *ngFor="let cal of response.data">
                                                 <td *ngFor="let w of totalWeeks[cal.year]" class="gantt-td-content">
-                                                    <a href="javascript:void();" *ngIf="w==child.start_week && child.year==cal.year" class="text-decoration-none link-light">
+                                                    <a href="javascript:void(0);" *ngIf="w==child.start_week && child.year==cal.year" class="text-decoration-none link-light">
                                                         <app-event [ComponentSize]="(((child.end_week-child.start_week)+1)*30)-2" [ComponentColor]="child.type.hex_color" [ComponentCollection]="child.collection.name" [ComponentBrand]="child.collection.brand.name" [ComponentDateStart]="child.start_date" [ComponentDateEnd]="child.end_date"></app-event>
                                                     </a>
                                                 </td>
@@ -150,7 +172,7 @@
             </div>
             <div class="modal-body">
                 <app-event-form *ngIf="moduleToOpen=='event'" (CloseModal)="onCloseModal($event)"></app-event-form>
-                <app-milestone-form *ngIf="moduleToOpen!='event'"></app-milestone-form>
+                <app-milestone-form *ngIf="moduleToOpen!='event'" (CloseModal)="onCloseModal($event)" [selectedEvent]="milestoneToEdit"></app-milestone-form>
             </div>
         </div>
     </div>
