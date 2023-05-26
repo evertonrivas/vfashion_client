@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import * as configData from 'src/assets/config.json';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -25,6 +26,7 @@ export class CalendarComponent implements OnInit{
       this.checkLogged();
     },30000);//verifica a cada 30 segundos
     this.myRoute.navigate(["/calendar/chart"]);
+    //this.myRoute.navigate(["/calendar/dashboard"]);
   }
 
   checkLogged():void{
@@ -40,6 +42,9 @@ export class CalendarComponent implements OnInit{
             //colocar aqui o alerta de que o tempo esta acabando
           }
         }
+      },
+      error:() =>{
+        document.location.href="/";
       }
     });
   }
