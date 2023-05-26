@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit,ViewEncapsulation,ElementRe
 import { DataManipulation } from 'src/app/datamanipulation';
 import { Calendar, CalendarEvent, CalendarOptions } from 'src/app/models/calendar.model';
 import { CalendarService } from 'src/app/services/calendar.service';
+import { IMyDateModel,IAngularMyDpOptions } from 'trade-datepicker/public-api';
 
 declare var window:any;
 
@@ -16,10 +17,36 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   @ViewChild('scrollTwo') scrollTwo!:ElementRef;
   currentScroll:string = "";
 
-  //
+  selectedDate:IMyDateModel ={
+    isRange: true,
+    dateRange:{
+      beginDate:{
+        day: 1,
+        month: 1,
+        year: new Date().getFullYear()
+      },
+      endDate:{
+        day: 1,
+        month: 1,
+        year: new Date().getFullYear()+1
+      }
+    }
+  }
+
+  myDpOptions: IAngularMyDpOptions = {
+    dateRange: true,
+    dateFormat: 'dd/mm/yyyy',
+    holidayDates: [],
+    firstDayOfWeek: "su",
+    
+  };
+
+  //Tratamento do Modal
   modalEdit:any;
   moduleToOpenName:string = "Evento";
   moduleToOpen:string = "event";
+  milestoneToEdit:CalendarEvent | null = null;
+  eventToEdit:CalendarEvent | null = null;
 
   override options:CalendarOptions = {
     search: "is:start ,is:end ",
@@ -73,6 +100,12 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
 
   loadData():void{
 
+    this.totalWeeks = [];
+    this.response.data = null;
+    this.eventsCalendar = [];
+    this.registryChecked = [];
+    this.milestones = [];
+
     //realiza carga das informacoes do calendario (datas)
     this.serviceSub[0] = this.svc.calendarLoad(this.options).subscribe({
       next: (data) =>{
@@ -90,7 +123,7 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
       }
     });
 
-    //realiza carga dos eventos que nao sao marcos do calendario
+    //realiza carga dos eventos (exceto Marcos)
     this.options.milestone = false;
     this.serviceSub[1] = this.svc.calendarEventLoad(this.options).subscribe({
       next: (data) =>{
@@ -109,7 +142,7 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
       }
     });
 
-    //realiza carga dos milestones que sao marcos do calendario
+    //realiza carga dos milestones (Exceto eventos longos)
     this.options.milestone = true;
     this.serviceSub[2] = this.svc.calendarEventLoad(this.options).subscribe({
       next: (data) =>{
@@ -152,7 +185,8 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
     this.modalEdit.show();
   }
 
-  onEditMilestone():void{
+  onEditMilestone(mile:CalendarEvent):void{
+    this.milestoneToEdit = mile;
     this.moduleToOpenName = 'Marco';
     this.moduleToOpen = 'milestone';
     this.modalEdit.show();
@@ -169,6 +203,18 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   onCloseModal(needClose:boolean):void{
     if (needClose){
       this.modalEdit.hide();
+      this.loadData();
     }
+  }
+
+  onDateChanged(event: IMyDateModel):void{
+    let dtStart = event.dateRange?.beginDate?.year+"-"+event.dateRange?.beginDate?.month+"-"+event.dateRange?.beginDate?.day;
+    let dtEnd = event.dateRange?.endDate?.year+"-"+event.dateRange?.endDate?.month+"-"+event.dateRange?.endDate?.day;
+    this.options.search = "is:start "+dtStart+",is:end "+dtEnd;
+    this.loadData();
+  }
+
+  formatEventDate(date:string):string{
+    return date.slice(0,5);
   }
 }
