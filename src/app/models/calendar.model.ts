@@ -25,7 +25,7 @@ export interface EventTypeOptions{
 }
 
 export interface CalendarEventType{
-    id: number,
+    id: number | string,
     name:string | null,
     hex_color:string,
     has_budget:boolean,
