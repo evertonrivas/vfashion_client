@@ -42,7 +42,6 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   };
 
   //Tratamento do Modal
-  modalEdit:any;
   moduleToOpenName:string = "Evento";
   moduleToOpen:string = "event";
   milestoneToEdit:CalendarEvent | null = null;
@@ -89,8 +88,8 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
       document.getElementById("modal_massive")
     );
 
-    this.modalEdit = new window.bootstrap.Modal(
-      document.getElementById("modal_edit")
+    this.offcanvas = new window.bootstrap.Offcanvas(
+      document.getElementById("offcanvas_edit")
     );
   }
 
@@ -170,26 +169,26 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   onNewEvent():void{
     this.moduleToOpenName = 'Evento';
     this.moduleToOpen = 'event';
-    this.modalEdit.show();
+    this.offcanvas.show();
   }
 
   onEditEvent(evt:CalendarEvent):void{
     this.moduleToOpenName = 'Evento';
     this.moduleToOpen = 'event';
-    this.modalEdit.show();
+    this.offcanvas.show();
   }
 
   onNewMilestone():void{
     this.moduleToOpenName = 'Marco';
     this.moduleToOpen = 'milestone';
-    this.modalEdit.show();
+    this.offcanvas.show();
   }
 
   onEditMilestone(mile:CalendarEvent):void{
     this.milestoneToEdit = mile;
     this.moduleToOpenName = 'Marco';
     this.moduleToOpen = 'milestone';
-    this.modalEdit.show();
+    this.offcanvas.show();
   }
 
   toggleSize(eventsLength:number,childrenLength:number):void{
@@ -202,7 +201,7 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
 
   onCloseModal(needClose:boolean):void{
     if (needClose){
-      this.modalEdit.hide();
+      this.offcanvas.hide();
       this.loadData();
     }
   }
