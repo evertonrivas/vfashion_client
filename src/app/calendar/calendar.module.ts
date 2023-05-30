@@ -14,6 +14,7 @@ import { EventFormComponent } from './event-form/event-form.component';
 import { MilestoneFormComponent } from './milestone-form/milestone-form.component';
 import { AngularMyDatePickerModule } from 'trade-datepicker';
 import { SharedModule } from '../shared/shared.module';
+import { BudgetComponent } from './budget/budget.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SharedModule } from '../shared/shared.module';
     EventComponent,
     MilestoneComponent,
     EventFormComponent,
-    MilestoneFormComponent
+    MilestoneFormComponent,
+    BudgetComponent
   ],
   imports: [
     CommonModule,
