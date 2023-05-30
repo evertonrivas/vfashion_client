@@ -1,7 +1,6 @@
 import { Subscription } from "rxjs";
 import { Checkbox } from "./models/checkbox.model";
 import { Paginate } from "./models/paginate.model";
-import * as Papa from 'papaparse';
 
 export interface Response{
     pagination: Paginate,
@@ -92,14 +91,17 @@ export class DataManipulation{
         }
     }
 
+    _json_to_csv():string{
+        return "";
+    }
+
     exportFile(data:any, type:string = "J"):void{
         const link = document.createElement("a");
 
         if (type=="C"){
             const string = JSON.stringify(data);
             const json = JSON.parse(string);
-            const csvString = Papa.unparse(json,{delimiter:';'});
-            const blob = new Blob([csvString],{type: 'application/csv;charset=utf-8'});
+            const blob = new Blob([json],{type: 'application/csv;charset=utf-8'});
             const url = URL.createObjectURL(blob);
             
             link.href  = url;
