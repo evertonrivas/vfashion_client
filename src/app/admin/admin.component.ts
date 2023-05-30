@@ -32,7 +32,7 @@ export class AdminComponent implements OnInit,OnDestroy{
       this.checkLogged();
     },30000);//verifica a cada 30 segundos
 
-    this.myRoute.navigate(['/admin/dashboard']);
+    this.myRoute.navigate(['/admin/dashboard'],{queryParams: {module: 'admin'}});
   }
 
   checkLogged():void{
