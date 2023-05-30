@@ -25,6 +25,7 @@ export class SalesforceComponent implements OnDestroy, OnInit{
   // faFacebook = faFacebook;
   // faLinkedin = faLinkedin;
   company_logo:string;
+  userType:string | null = null;
 
   constructor(changeDetectorRef:ChangeDetectorRef, 
     media: MediaMatcher, private myRoute:Router,
@@ -57,6 +58,7 @@ export class SalesforceComponent implements OnDestroy, OnInit{
     this.idTimer = <any>setInterval(() =>{
       this.checkLogged();
     },30000);//verifica a cada 30 segundos
+    this.userType = localStorage.getItem("level_access");
     if (localStorage.getItem("level_access")=="R"){
       this.myRoute.navigate(["/salesforce/representative"]);
     }else{
