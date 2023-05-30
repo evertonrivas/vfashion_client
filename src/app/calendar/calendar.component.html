@@ -1,16 +1,21 @@
 <div id="mainContent">
   <header class="header d-flex display-content-start" id="header">
     <div class="header_toggle">
-      <a href="#" [routerLink]="['/calendar/dashboard']" class="text-light pe-1">
-      <span class="material-symbols-outlined">
+      <a href="#" [routerLink]="['/calendar/dashboard']" class="text-light pe-4">
+      <span class="material-symbols-outlined align-middle">
         dashboard
-        </span>
+        </span><small>Dashboard</small>
       </a>
-      <a href="#" [routerLink]="['/calendar/chart']" class="text-light pe-1">
-        <span class="material-symbols-outlined">
+      <a href="#" [routerLink]="['/calendar/chart']" class="text-light pe-4">
+        <span class="material-symbols-outlined align-middle">
           calendar_month
-        </span>
+        </span><small>Calendário</small>
       </a>
+      <!-- <a href="#" [routerLink]="['/calendar/budget']" class="text-light pe-4">
+        <span class="material-symbols-outlined align-middle">
+          paid
+        </span><small>Orçamento</small>
+      </a> -->
     </div>
     <div class="flex-shrink-0 dropdown" style="max-width: 40px!important;">
       <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

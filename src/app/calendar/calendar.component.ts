@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import * as configData from 'src/assets/config.json';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -20,13 +19,14 @@ export class CalendarComponent implements OnInit{
     private myRoute:Router){
     this.company_logo = this.sys_config.company.logo_mini;
   }
+
   ngOnInit(): void {
     this.checkLogged();
     this.idTimer = <any>setInterval(() =>{
       this.checkLogged();
     },30000);//verifica a cada 30 segundos
-    this.myRoute.navigate(["/calendar/chart"]);
-    //this.myRoute.navigate(["/calendar/dashboard"]);
+    // this.myRoute.navigate(["/calendar/chart"]);
+    this.myRoute.navigate(["/calendar/dashboard"]);
   }
 
   checkLogged():void{
@@ -54,5 +54,4 @@ export class CalendarComponent implements OnInit{
       document.location.href='/';
     });
   }
-
 }
