@@ -42,7 +42,7 @@ export class CalendarService extends MyHttp{
   }
 
   calendarEventDelete(evts:number[]):Observable<boolean>{
-    return this.http.delete<boolean>(this.sys_config.backend_scm+'/calendar',{
+    return this.http.delete<boolean>(this.sys_config.backend_scm+'/calendar/',{
       headers:this.getHeaderPost(ContentType.form),
       body: evts
     });
