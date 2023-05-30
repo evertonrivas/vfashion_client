@@ -13,6 +13,7 @@ export class DataManipulation{
     options:any;
     masterChecked:boolean = false;
     hasSend:boolean = false;
+    hasSendDelete:boolean = false;
     isEdit:boolean = false;
     registryChecked:Checkbox = {};
     serviceSub:Subscription[] = [];
@@ -20,7 +21,7 @@ export class DataManipulation{
     isCollapsedFilter:boolean = false;
     offcanvas:any;
     modal:any;
-    totalToChange:number = 0;
+    totalChecked:number = 0;
     message:string = "";
     searchTerm:string = "";
 
