@@ -245,12 +245,12 @@ export class EntitiesComponent extends DataManipulation{
     this.serviceSub[4] = this.svc.userMassive(usrs).subscribe((data)=>{
       if(data){
         this.toastr.success("Usuário(s) atualizado(s) com sucesso!");
-        this.totalToChange = 0;
+        this.totalChecked = 0;
         this.loadData();
         this.modal.hide();
       }else{
         this.toastr.error("Ocorreu um problema ao tentar alterar o(s) usuário(s)!");
-        this.totalToChange = 0;
+        this.totalChecked = 0;
         this.modal.hide();
       }
     });
@@ -259,15 +259,15 @@ export class EntitiesComponent extends DataManipulation{
   onExecuteMassive():void{
     Object.keys(this.registryChecked).forEach((k)=>{
       if (this.registryChecked[parseInt(k)]==true){
-        this.totalToChange++;
+        this.totalChecked++;
       }
     });
-    if (this.totalToChange==1){
+    if (this.totalChecked==1){
       this.message = 'Deseja realmente executar ação no registro selecionado?';
     }else{
       this.message = 'Deseja realmente executar ação massiva em todos os registros selecionados?';
     }
-    if (this.totalToChange > 0 ){
+    if (this.totalChecked > 0 ){
       this.modal.show();
     }
     else{
@@ -283,5 +283,9 @@ export class EntitiesComponent extends DataManipulation{
   onSearch():void{
     this.options.search = 'is:query '+this.searchTerm;
     this.loadData();
+  }
+
+  onDeleteMassive():void{
+
   }
 }
