@@ -10,7 +10,6 @@ import * as sys_config from 'src/assets/config.json';
 import { UsersComponent } from './users/users.component';
 import { EntitiesComponent } from './entities/entities.component';
 import { ConfigComponent } from './config/config.component';
-import { ProfileComponent } from './profile/profile.component';
 import { NgxColorsModule } from 'ngx-colors';
 import { SharedModule } from '../shared/shared.module';
 
@@ -21,8 +20,7 @@ registerLocaleData(ptBr)
         AdminComponent,
         UsersComponent,
         EntitiesComponent,
-        ConfigComponent,
-        ProfileComponent
+        ConfigComponent
     ],
     providers: [
         {
