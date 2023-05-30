@@ -135,7 +135,7 @@
                                     <tr class="row-content">
                                         <ng-container *ngFor="let cal of response.data">
                                             <td *ngFor="let w of totalWeeks[cal.year]" class="gantt-td-content">
-                                                <a href="javascript:void(0);" *ngIf="w==event.start_week && event.year==cal.year" class="text-decoration-none link-light">
+                                                <a href="javascript:void(0);" (click)="onEditEvent(event)" *ngIf="w==event.start_week && event.year==cal.year" class="text-decoration-none link-light">
                                                     <app-event [ComponentSize]="(((event.end_week-event.start_week)+1)*30)-2" [ComponentColor]="event.type.hex_color" [ComponentCollection]="event.collection.name" [ComponentBrand]="event.collection.brand.name" [ComponentDateStart]="formatEventDate(event.start_date)" [ComponentDateEnd]="formatEventDate(event.end_date)"></app-event>
                                                 </a>
                                             </td>
@@ -145,8 +145,8 @@
                                         <tr [ngClass]="event.children.length>0?'accordion-collapse collapse':''" [id]="'collapse'+event.id">
                                             <ng-container *ngFor="let cal of response.data">
                                                 <td *ngFor="let w of totalWeeks[cal.year]" class="gantt-td-content">
-                                                    <a href="javascript:void(0);" *ngIf="w==child.start_week && child.year==cal.year" class="text-decoration-none link-light">
-                                                        <app-event [ComponentSize]="(((child.end_week-child.start_week)+1)*30)-2" [ComponentColor]="child.type.hex_color" [ComponentCollection]="child.collection.name" [ComponentBrand]="child.collection.brand.name" [ComponentDateStart]="child.start_date" [ComponentDateEnd]="child.end_date"></app-event>
+                                                    <a href="javascript:void(0);" (click)="onEditEvent(child)" *ngIf="w==child.start_week && child.year==cal.year" class="text-decoration-none link-light">
+                                                        <app-event [ComponentSize]="(((child.end_week-child.start_week)+1)*30)-2" [ComponentColor]="child.type.hex_color" [ComponentCollection]="child.collection.name" [ComponentBrand]="child.collection.brand.name" [ComponentDateStart]="formatEventDate(child.start_date)" [ComponentDateEnd]="formatEventDate(child.end_date)"></app-event>
                                                     </a>
                                                 </td>
                                             </ng-container>
@@ -162,21 +162,17 @@
     </div>
 </div>
 
-<!--Modal para edição de milestone e evento-->
-<div class="modal fade" id="modal_edit" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Cadastro/Edição de {{moduleToOpenName}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <app-event-form *ngIf="moduleToOpen=='event'" (CloseModal)="onCloseModal($event)"></app-event-form>
-                <app-milestone-form *ngIf="moduleToOpen!='event'" (CloseModal)="onCloseModal($event)" [selectedEvent]="milestoneToEdit"></app-milestone-form>
-            </div>
-        </div>
+<!--Offcanvas para edição de milestone e evento-->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas_edit" aria-labelledby="offcanvas_editLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvas_editLabel">Cadastro/Edição de {{moduleToOpenName}}</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-</div>
+    <div class="offcanvas-body">
+        <app-event-form *ngIf="moduleToOpen=='event'" (CloseModal)="onCloseModal($event)" [selectedEvent]="eventToEdit" [selectedPeriod]="selectedDate"></app-event-form>
+        <app-milestone-form *ngIf="moduleToOpen!='event'" (CloseModal)="onCloseModal($event)" [selectedEvent]="milestoneToEdit" [selectedPeriod]="selectedDate"></app-milestone-form>
+    </div>
+  </div>
 
 <div class="modal fade" id="modal_massive" tabindex="-1">
     <div class="modal-dialog">
