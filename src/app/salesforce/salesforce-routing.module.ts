@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HelpComponent } from './help/help.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from '../profile/profile.component';
 import { SalesforceComponent } from './salesforce.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { ReturnComponent } from './return/return.component';
