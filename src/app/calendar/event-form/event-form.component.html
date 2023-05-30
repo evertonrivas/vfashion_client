@@ -1,0 +1,85 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="frmEvent" novalidate class="needs-validation">
+    <div class="row mb-2">
+        <div class="col-md">
+            <label for="slEventType">Tipo do Evento</label>
+            <select id="slEventType" class="form-select" formControlName="slEventType" [ngClass]="{'is-invalid': (hasSend && frmEvent.controls['slEventType'].invalid) }" required (change)="onChangeType()" [(ngModel)]="selectedEventType.id">
+                <option value="">&laquo; Selecione &raquo;</option>
+                <ng-container *ngFor="let evt of eventTypes">
+                    <option [value]="evt.id" *ngIf="evt.is_milestone==false">{{evt.name}}</option>
+                    <ng-container *ngFor="let child of evt.children">
+                        <option [value]="child.id">&nbsp;&nbsp;&nbsp;- {{child.name}}</option>
+                    </ng-container>
+                </ng-container>
+            </select>
+        </div>
+    </div>
+    <div class="row mb-2" *ngIf="showEventTypeCollection">
+        <div class="col-md">
+            <label for="slEventCollection">Coleção</label>
+            <select id="slEventCollection" class="form-select" formControlName="slEventCollection">
+                <option value="">&laquo; Selecione &raquo;</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mb-2" *ngIf="showParentEvents">
+        <div class="col-md">
+            <label for="SlEventParent">Evento</label>
+            <select id="slEventParent" class="form-select" formControlName="slEventParent" [(ngModel)]="selectedParentEventId" [ngClass]="{'is-invalid': hasSend && frmEvent.controls['dtEventStart'].invalid && showParentEvents }" [attr.required]="showParentEvents" (change)="setPeriod()">
+                <option *ngFor="let event of exsistentEvents" [value]="event.id">{{event.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md">
+            <label for="txtEventName">Nome</label>
+            <input type="text" class="form-control" id="txtEventName" formControlName="txtEventName" [ngClass]="{'is-invalid': (hasSend && frmEvent.controls['txtEventName'].invalid)?true:false }" required>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md">
+            <label for="dtEventStart">De</label>
+            <div class="input-group" role="group">
+                <input class="form-control" name="dtEventStart" placeholder="Selecione a data inicial" 
+                    angular-mydatepicker #dps="angular-mydatepicker" 
+                    [options]="myDpOptStart" [(ngModel)]="selectedDateStart" formControlName="dtEventStart"
+                    (dateChanged)="onDateStartChanged($event)" locale="pt-br" readonly [ngClass]="{'is-invalid': hasSend && frmEvent.controls['dtEventStart'].invalid }" required/>
+                <button type="button" class="btn btn-outline-secondary" (click)="dps.toggleCalendar()">
+                    <span class="material-symbols-outlined icon-small align-middle">
+                        calendar_today
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="col-md">
+            <label for="dtEventEnd">At&eacute;</label>
+            <div class="input-group" role="group">
+                <input class="form-control" name="dtEventEnd" placeholder="Selecione a data final" 
+                    angular-mydatepicker #dpe="angular-mydatepicker" 
+                    [options]="myDpOptEnd" [(ngModel)]="selectedDateEnd" formControlName="dtEventEnd"
+                    (dateChanged)="onDateEndChanged($event)" locale="pt-br" readonly [ngClass]="{'is-invalid': hasSend && frmEvent.controls['dtEventEnd'].invalid }" required/>
+                <button type="button" class="btn btn-outline-secondary" (click)="dpe.toggleCalendar()">
+                    <span class="material-symbols-outlined icon-small align-middle">
+                        calendar_today
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2" *ngIf="showEventTypeBudget">
+        <div class="col-md">
+            <label for="txtEventBudget">Orçamento</label>
+            <div class="input-group" role="group">
+                <input type="text" class="form-control" id="txtEventBudget" mask="separator" thousandSeparator="." formControlName="txtEventBudget" [ngClass]="{'is-invalid': hasSend && frmEvent.controls['txtEventBudget'].invalid && showEventTypeBudget}" [attr.required]="showEventTypeBudget" readonly>
+                <button type="button" class="btn btn-outline-secondary"><span class="material-symbols-outlined align-middle">price_check</span></button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <button type="button" class="btn btn-danger w-100" (click)="closeForm()"><span class="material-symbols-outlined align-middle icon-small">cancel</span> Cancelar</button>
+        </div>
+        <div class="col-md">
+            <button type="submit" class="btn btn-primary w-100" [ngClass]="hasSend && frmEvent.invalid?'disabled':''"><span class="material-symbols-outlined align-middle icon-small">save</span> Salvar</button>
+        </div>
+    </div>
+  </form>
