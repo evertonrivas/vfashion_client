@@ -5,6 +5,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { ConfigComponent } from './config/config.component';
 import { EntitiesComponent } from './entities/entities.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 const routes: Routes = [{ 
   path: '', 
@@ -21,6 +22,9 @@ const routes: Routes = [{
   },{
     path: 'entities',
     component: EntitiesComponent
+  },{
+    path: 'profile',
+    component: ProfileComponent
   }] 
 }];
 
