@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule,DATE_PIPE_DEFAULT_OPTIONS,registerLocaleData } from '@angular/common';
 
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { CalendarComponent } from './calendar.component';
@@ -15,7 +15,11 @@ import { MilestoneFormComponent } from './milestone-form/milestone-form.componen
 import { AngularMyDatePickerModule } from 'trade-datepicker';
 import { SharedModule } from '../shared/shared.module';
 import { BudgetComponent } from './budget/budget.component';
+import { LOCALE_ID, DEFAULT_CURRENCY_CODE } from '@angular/core';
+import ptBr from '@angular/common/locales/pt';
+import * as sys_config from 'src/assets/config.json';
 
+registerLocaleData(ptBr)
 
 @NgModule({
   declarations: [
@@ -40,7 +44,21 @@ import { BudgetComponent } from './budget/budget.component';
     SharedModule
   ],
   providers:[
-    provideNgxMask()
+    provideNgxMask(),
+    {
+      provide: LOCALE_ID,
+      useValue: ((sys_config as any).default).locale.language
+    },
+    {
+        provide: DEFAULT_CURRENCY_CODE,
+        useValue: ((sys_config as any).default).locale.currency_code
+    }, {
+        provide: DATE_PIPE_DEFAULT_OPTIONS,
+        useValue: {
+            dateFormat: ((sys_config as any).default).locale.date_format,
+            timezone: ((sys_config as any).default).locale.timezone
+        }
+    }
   ]
 })
 export class CalendarModule { }
