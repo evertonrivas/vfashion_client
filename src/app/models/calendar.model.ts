@@ -36,6 +36,7 @@ export interface CalendarEventType{
 
 export interface CalendarEvent{
     id:number,
+    id_parent: number |null,
     name:string,
     start_week:number,
     end_week:number,
@@ -50,10 +51,12 @@ export interface CalendarEvent{
 
 export interface CalendarEventData{
     id:number,
+    id_parent:number|null,
     name:string,
     date_start:string,
     date_end:string,
     id_event_type: number,
     id_collection:number | null,
-    budget_value:number | null
+    budget_value:number | null,
+    year:number
 }
