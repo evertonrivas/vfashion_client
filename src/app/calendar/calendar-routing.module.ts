@@ -4,6 +4,7 @@ import { CalendarComponent } from './calendar.component';
 import { GanttComponent } from './gantt/gantt.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { BudgetComponent } from './budget/budget.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 const routes: Routes = [{ 
   path: '', 
@@ -18,6 +19,9 @@ const routes: Routes = [{
   {
     path: 'budget',
     component: BudgetComponent
+  },{
+    path: 'profile',
+    component: ProfileComponent
   }]
 }];
 
