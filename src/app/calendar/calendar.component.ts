@@ -26,7 +26,9 @@ export class CalendarComponent implements OnInit{
       this.checkLogged();
     },30000);//verifica a cada 30 segundos
     // this.myRoute.navigate(["/calendar/chart"]);
-    this.myRoute.navigate(["/calendar/dashboard"]);
+    this.myRoute.navigate(["/calendar/dashboard"],{
+      queryParams:{module:'calendar'}
+    });
   }
 
   checkLogged():void{
