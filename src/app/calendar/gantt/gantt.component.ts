@@ -48,7 +48,7 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   eventToEdit:CalendarEvent | null = null;
 
   override options:CalendarOptions = {
-    search: "is:start ,is:end ",
+    search: "is:start ||is:end ",
     milestone:false
   };
   totalWeeks:number[][] = [];
@@ -173,6 +173,7 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   }
 
   onEditEvent(evt:CalendarEvent):void{
+    this.eventToEdit = evt;
     this.moduleToOpenName = 'Evento';
     this.moduleToOpen = 'event';
     this.offcanvas.show();
@@ -207,13 +208,15 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   }
 
   onDateChanged(event: IMyDateModel):void{
+    this.selectedDate = event;
     let dtStart = event.dateRange?.beginDate?.year+"-"+event.dateRange?.beginDate?.month+"-"+event.dateRange?.beginDate?.day;
     let dtEnd = event.dateRange?.endDate?.year+"-"+event.dateRange?.endDate?.month+"-"+event.dateRange?.endDate?.day;
-    this.options.search = "is:start "+dtStart+",is:end "+dtEnd;
+    this.options.search = "is:start "+dtStart+"||is:end "+dtEnd;
     this.loadData();
   }
 
   formatEventDate(date:string):string{
-    return date.slice(0,5);
+    let d = date.split("-");
+    return d[2]+"/"+d[1];
   }
 }
