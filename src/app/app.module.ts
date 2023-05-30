@@ -17,6 +17,7 @@ import { SelectorComponent } from './selector/selector.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from './shared/shared.module';
 import { CardComponent } from './dashboard/card/card.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CardComponent } from './dashboard/card/card.component';
     LoginComponent,
     SelectorComponent,
     DashboardComponent,
+    ProfileComponent,
     CardComponent
   ],
   imports: [
