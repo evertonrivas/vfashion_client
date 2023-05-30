@@ -16,13 +16,15 @@ import { LoginComponent } from './login/login.component';
 import { SelectorComponent } from './selector/selector.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from './shared/shared.module';
+import { CardComponent } from './dashboard/card/card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SelectorComponent,
-    DashboardComponent
+    DashboardComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
