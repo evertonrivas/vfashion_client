@@ -12,7 +12,6 @@ import { SalesforceComponent } from './salesforce.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { FilterComponent } from './filter/filter.component';
 import { HelpComponent } from './help/help.component';
-import { ProfileComponent } from './profile/profile.component';
 
 import { NgxMaskPipe, NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { CartComponent } from './cart/cart.component';
@@ -30,7 +29,6 @@ import { CatalogComponent } from './catalog/catalog.component';
     GalleryComponent,
     FilterComponent,
     HelpComponent,
-    ProfileComponent,
     CartComponent,
     ReturnComponent,
     HistoryComponent,
