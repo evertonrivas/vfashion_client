@@ -13,6 +13,7 @@ import { IAngularMyDpOptions, IMyDateModel } from 'trade-datepicker/public-api';
 })
 export class MilestoneFormComponent extends DataManipulation implements OnInit, OnDestroy,OnChanges{
   @Input() selectedEvent:CalendarEvent | null = null;
+  @Input() selectedPeriod:IMyDateModel | null = null;
   @Output() CloseModal = new EventEmitter<boolean>;
   eventTypes:CalendarEventType[] = [];
   selectedEventType:CalendarEventType;
@@ -27,8 +28,7 @@ export class MilestoneFormComponent extends DataManipulation implements OnInit, 
     dateRange: false,
     dateFormat: 'dd/mm/yyyy',
     holidayDates: [],
-    firstDayOfWeek: "su",
-    
+    firstDayOfWeek: "su"
   };
   selectedDate:IMyDateModel | null = null;
 
@@ -50,21 +50,22 @@ export class MilestoneFormComponent extends DataManipulation implements OnInit, 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.selectedEvent!=null){
       this.selectedEventType.id = this.selectedEvent.type.id;
-    }
-    this.frmMilestone.controls["txtMilestoneName"].setValue(this.selectedEvent?.name);
-    let data = this.selectedEvent?.start_date;
-    if (data!=undefined){
-      this.selectedDate = {
-        isRange:false,
-        singleDate:{
-          date:{
-            day: parseInt(String(data).slice(0,2)),
-            month: parseInt(String(data).slice(3,5)),
-            year: parseInt(String(data).slice(6,10)),
+    
+      this.frmMilestone.controls["txtMilestoneName"].setValue(this.selectedEvent?.name);
+      let data = this.selectedEvent?.start_date;
+      if (data!=undefined){
+        this.selectedDate = {
+          isRange:false,
+          singleDate:{
+            date:{
+              day: parseInt(String(data).slice(0,2)),
+              month: parseInt(String(data).slice(3,5)),
+              year: parseInt(String(data).slice(6,10)),
+            }
           }
         }
       }
-    }    
+    }  
   }
 
   onSubmit():boolean{
@@ -73,34 +74,39 @@ export class MilestoneFormComponent extends DataManipulation implements OnInit, 
       return false;
     }
 
+    let dstart = this.selectedDate?.singleDate?.date?.year+"-"+this.selectedDate?.singleDate?.date?.month+"-"+this.selectedDate?.singleDate?.date?.day;
+
     let event:CalendarEventData ={
       id: this.selectedEvent?.id as number,
+      id_parent: null,
       name: this.frmMilestone.controls["txtMilestoneName"].value,
-      date_start: this.frmMilestone.controls["dtMilestoneStart"].value,
-      date_end: this.frmMilestone.controls["dtMilestoneStart"].value,
+      date_start: dstart,
+      date_end: dstart,
       budget_value: null,
       id_event_type: this.frmMilestone.controls["slMilestoneType"].value,
-      id_collection: null
+      id_collection: null,
+      year: this.selectedDate?.singleDate?.date?.year as number
     }
 
     this.serviceSub[1] = this.svc.calendarEventSave(event).subscribe({
       next: (data) =>{
         if(data){
           this.toastr.success("Marco salvo com sucesso!");
-          this.frmMilestone.reset();
-          this.selectedEventType = {
-            id: "",
-            name: "",
-            has_budget: false,
-            hex_color: "",
-            is_milestone: false,
-            use_collection: false,
-            children: [],
-          };
-          this.hasSend = false;
         }
       },
       complete: () => {
+        this.selectedEventType = {
+          id: "",
+          name: "",
+          has_budget: false,
+          hex_color: "",
+          is_milestone: false,
+          use_collection: false,
+          children: [],
+        };
+        this.frmMilestone.reset();
+        this.hasSend = false;
+        this.selectedEvent = null;
         this.CloseModal.emit(true);
       },
     });
