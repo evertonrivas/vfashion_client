@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CalendarComponent } from './calendar.component';
 import { GanttComponent } from './gantt/gantt.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { BudgetComponent } from './budget/budget.component';
 
 const routes: Routes = [{ 
   path: '', 
@@ -13,6 +14,10 @@ const routes: Routes = [{
   },{
     path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'budget',
+    component: BudgetComponent
   }]
 }];
 
