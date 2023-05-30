@@ -6,8 +6,15 @@
         <div class="btn-toolbar">
             <div class="btn-group btn-group-sm" role="group">
                 <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Novo" (click)="onNew()"><span class="material-symbols-outlined align-middle">add</span></button>
-                <button type="button" class="btn btn-primary btn-sm" [class.active]="isCollapsedFilter" (click)="collapseFilter()" aria-expanded="false" data-bs-toggle="tooltip" title="Filtros"><span class="material-symbols-outlined">filter_alt</span></button>
-                <button type="button" class="btn btn-primary btn-sm" [class.active]="isCollapsedMassive" (click)="collapseMassive()" aria-expanded="false" data-bs-toggle="tooltip" title="Alterações em massa"><span class="material-symbols-outlined">published_with_changes</span></button>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Excluir Selecionado(s)" (click)="onDeleteMassive()">
+                    <span class="material-symbols-outlined align-middle">delete</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" [class.active]="isCollapsedFilter" (click)="collapseFilter()" aria-expanded="false" data-bs-toggle="tooltip" title="Filtros">
+                    <span class="material-symbols-outlined align-middle">filter_alt</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" [class.active]="isCollapsedMassive" (click)="collapseMassive()" aria-expanded="false" data-bs-toggle="tooltip" title="Alterações em massa">
+                    <span class="material-symbols-outlined align-middle">published_with_changes</span>
+                </button>
                 <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Paginação">
                     <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
                         {{this.options.pagSize}}
@@ -20,7 +27,7 @@
                 </div>
                 <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Exportar">
                     <button type="button" class="btn  btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="material-symbols-outlined">download</span>
+                        <span class="material-symbols-outlined align-middle">download</span>
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportCSV()">CSV</a></li>
@@ -182,8 +189,11 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Confirmação de execução</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <span class="material-symbols-outlined align-middle text-danger">
+                error
+            </span>
+            <h5 class="modal-title">Confirmação de execução</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <p>{{message}}</p>
