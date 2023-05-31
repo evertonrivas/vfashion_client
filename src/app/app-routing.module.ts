@@ -12,7 +12,8 @@ const routes: Routes = [{
 },
 { path: 'salesforce', loadChildren: () => import('./salesforce/salesforce.module').then(m => m.SalesforceModule) },
 { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-{ path: 'calendar', loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule) }];
+{ path: 'calendar', loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule) },
+{ path: 'crm', loadChildren: () => import('./crm/crm.module').then(m => m.CrmModule) }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
