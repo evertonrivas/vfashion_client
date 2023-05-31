@@ -10,6 +10,7 @@ import { HistoryComponent } from './history/history.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ProductComponent } from './product/product.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 const routes: Routes = [{ 
   path: '', 
@@ -42,6 +43,9 @@ const routes: Routes = [{
   {
     path: 'catalog',
     component: CatalogComponent
+  },{
+    path: 'dashboard',
+    component: DashboardComponent
   }]
 }];
 
