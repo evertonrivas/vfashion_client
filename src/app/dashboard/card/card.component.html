@@ -5,8 +5,9 @@
             <h5>{{title}}</h5>
         </div>
         <div class="d-flex justify-content-start"><span class="text-secondary">{{subtitle}}</span></div>
-        <h1 *ngIf="isMoney">{{value | shortMoney}}</h1>
-        <h1 *ngIf="isNumber">{{value}}</h1>
-        <span *ngIf="isText">{{text}}</span>
+        <h1 *ngIf="dataType==0">{{value | shortMoney}}</h1>
+        <h1 *ngIf="dataType==1">{{value}}</h1>
+        <span *ngIf="dataType==2">{{text}}</span>
+        <span *ngIf="dataType==3" [innerHTML]="text"></span>
     </div>
 </div>

@@ -1,14 +1,19 @@
 import { Component,Input } from '@angular/core';
 
+export enum FormatType{
+  MONEY  = 0,
+  NUMBER = 1,
+  TEXT   = 2,
+  HTML   = 3
+}
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent {
-  @Input() isMoney:boolean      = false;
-  @Input() isNumber:boolean     = false;
-  @Input() isText:boolean       = false;
+  @Input() dataType:FormatType = FormatType.TEXT;
   @Input() icon:string|null     = null;
   @Input() title:string|null    = null;
   @Input() subtitle:string|null = null;
