@@ -18,6 +18,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from './shared/shared.module';
 import { CardComponent } from './dashboard/card/card.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ToastRenewComponent } from './toast-renew/toast-renew.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProfileComponent } from './profile/profile.component';
     SelectorComponent,
     DashboardComponent,
     ProfileComponent,
-    CardComponent
+    CardComponent,
+    ToastRenewComponent
   ],
   imports: [
     BrowserModule,
