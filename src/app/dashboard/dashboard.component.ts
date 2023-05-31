@@ -5,6 +5,7 @@ import { EntityType } from 'src/app/models/entity.model';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { ActivatedRoute } from '@angular/router';
 import { Card } from '../models/card.model';
+import { FormatType } from './card/card.component';
 
 
 @Component({
@@ -23,8 +24,10 @@ export class DashboardComponent  implements OnInit,AfterContentInit{
   bodyMax = 30000000;
   location:string = "";
 
-  //cards do dashboard
-  cards:Card[] = []
+  //cards do topo
+  topCards:Card[] = []
+  //cards laterias
+  rowCards:Card[] = []
 
   constructor(private svc:DashboardService,private route: ActivatedRoute){
 
@@ -34,34 +37,55 @@ export class DashboardComponent  implements OnInit,AfterContentInit{
     if (this.location=="admin"){
       
     }else if(this.location=="calendar"){
-      this.cards[0].icon     = "finance_chip";
-      this.cards[0].title    = "Valor em Pedidos";
-      this.cards[0].subtitle = "Última coleção";
-      this.cards[0].value    = 32000000;
-      this.cards[0].isMoney  = true;
+      this.topCards[0].icon     = "finance_chip";
+      this.topCards[0].title    = "Valor em Pedidos";
+      this.topCards[0].subtitle = "Última coleção";
+      this.topCards[0].value    = 32000000;
+      this.topCards[0].dataType = FormatType.MONEY;
 
-      this.cards[1].icon     = "order_approve";
-      this.cards[1].title    = "Nº de Pedidos";
-      this.cards[1].subtitle = "Última coleção";
-      this.cards[1].value    = 350;
-      this.cards[1].isNumber = true;
-
-
+      this.topCards[1].icon     = "order_approve";
+      this.topCards[1].title    = "Nº de Pedidos";
+      this.topCards[1].subtitle = "Última coleção";
+      this.topCards[1].value    = 350;
+      this.topCards[1].dataType = FormatType.NUMBER;
 
       this.svc.countEntity(EntityType.C).subscribe((data) =>{
-        this.cards[2].icon     = "store";
-        this.cards[2].title    = "Nº de Clientes";
-        this.cards[2].subtitle = "Ativos no sistema";
-        this.cards[2].value    = data;
-        this.cards[2].isNumber = true;
+        this.topCards[2].icon     = "store";
+        this.topCards[2].title    = "Nº de Clientes";
+        this.topCards[2].subtitle = "Ativos no sistema";
+        this.topCards[2].value    = data;
+        this.topCards[2].dataType = FormatType.NUMBER;
       });
+
       this.svc.countEntity(EntityType.R).subscribe((data) =>{ 
-        this.cards[3].icon     = "apartment"
-        this.cards[3].title    = "Nº de Representantes";
-        this.cards[3].subtitle = "Ativos no sistema";
-        this.cards[3].value    = data;
-        this.cards[3].isNumber = true;
+        this.topCards[3].icon     = "apartment"
+        this.topCards[3].title    = "Nº de Representantes";
+        this.topCards[3].subtitle = "Ativos no sistema";
+        this.topCards[3].value    = data;
+        this.topCards[3].dataType = FormatType.NUMBER;
       });
+
+      let c:Card = {
+        dataType: FormatType.HTML,
+        icon: "today",
+        title: "Última Coleção",
+        subtitle: "Alto Inverno 2023",
+        text: "<small>VD: 01/01/2023 - 01/02/2023 <br>FT: 01/03/2023 - 01/04/2023</small>",
+        value: 0
+      }
+
+      let c1:Card = {
+        dataType: FormatType.HTML,
+        icon:"event",
+        title: "Próxima Coleção",
+        subtitle: "Baixo Inverno 2023",
+        text: "<small>VD: 01/06/2023 - 01/07/2023 <br>FT: 01/08/2023 - 01/09/2023</small>",
+        value:0
+      }
+      
+      this.rowCards.push(c);
+      this.rowCards.push(c1);
+
     }else if(this.location=="salesforce"){
 
     }
@@ -77,14 +101,14 @@ export class DashboardComponent  implements OnInit,AfterContentInit{
     for(let i=0;i<4;i++){
       let card:Card ={
         value:0,
-        isMoney: false,
-        isNumber: false,
+        dataType: FormatType.TEXT,
         icon: "",
         subtitle:null,
-        title:null
+        title:null,
+        text:null
       }
 
-      this.cards.push(card);
+      this.topCards.push(card);
     }
 
     const meuBodyMax = this.bodyMax; 
