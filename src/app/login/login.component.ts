@@ -83,6 +83,7 @@ export class LoginComponent implements OnInit{
           localStorage.setItem('id_profile',String(this.app_token.id_profile));
           localStorage.setItem('token_expire',this.app_token.token_expire);
           localStorage.setItem("level_access",String(this.app_token.level_access));
+          localStorage.setItem("message_renew","1");
           switch(this.app_token.level_access){
             case "A": this.route.navigate(["/selector"]); break;
             case "L": this.route.navigate(["/salesforce"]); break;
