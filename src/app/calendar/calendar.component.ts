@@ -3,6 +3,8 @@ import { SecurityService } from '../services/security.service';
 import { Subscription } from 'rxjs';
 import * as configData from 'src/assets/config.json';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ToastRenewComponent } from '../toast-renew/toast-renew.component';
 
 @Component({
   selector: 'app-calendar',
@@ -16,7 +18,8 @@ export class CalendarComponent implements OnInit{
   idTimer = 0;
 
   constructor(private auth:SecurityService, 
-    private myRoute:Router){
+    private myRoute:Router,
+    private toastr:ToastrService){
     this.company_logo = this.sys_config.company.logo_mini;
   }
 
@@ -40,8 +43,21 @@ export class CalendarComponent implements OnInit{
           let dt_token = Date.parse( String(localStorage.getItem('token_expire')) );
           let now = Date.now();
           const diffTime = Math.abs(dt_token - now);
-          if(diffTime<=60000){
-            //colocar aqui o alerta de que o tempo esta acabando
+          if(diffTime<=300000){//5 minutos
+
+            if(localStorage.getItem("message_renew")=="1"){
+              this.toastr.show(
+                'Gostaria de renovar sua sessão por mais 1 hora?',
+                "Renovação de Sessão",{
+                  toastComponent:ToastRenewComponent,
+                  toastClass: 'toastrenew',
+                  timeOut: 5000,
+                  extendedTimeOut: 2000,
+                  closeButton:true,
+                  progressBar:true,
+                  progressAnimation: 'increasing'
+              });
+            }
           }
         }
       },

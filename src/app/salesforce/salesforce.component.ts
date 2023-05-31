@@ -7,6 +7,8 @@ import { FilterService } from '../services/filter.service';
 import { Filter } from 'src/app/models/filter.model';
 import { OrderService } from '../services/order.service';
 import * as configData from 'src/assets/config.json';
+import { ToastrService } from 'ngx-toastr';
+import { ToastRenewComponent } from '../toast-renew/toast-renew.component';
 
 @Component({
   selector: 'app-salesforce',
@@ -30,7 +32,8 @@ export class SalesforceComponent implements OnDestroy, OnInit{
   constructor(changeDetectorRef:ChangeDetectorRef, 
     media: MediaMatcher, private myRoute:Router,
     private sOrder:OrderService, 
-    private auth:SecurityService, private sFilter:FilterService){
+    private auth:SecurityService, private sFilter:FilterService,
+    private toastr:ToastrService){
     this.mobileQuery = media.matchMedia('(max-width:600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener('change',this._mobileQueryListener);
@@ -100,8 +103,21 @@ export class SalesforceComponent implements OnDestroy, OnInit{
           let dt_token = Date.parse( String(localStorage.getItem('token_expire')) );
           let now = Date.now();
           const diffTime = Math.abs(dt_token - now);
-          if(diffTime<=60000){
-            //colocar aqui o alerta de que o tempo esta acabando
+          if(diffTime<=300000){//5 minutos
+            
+            if(localStorage.getItem("message_renew")=="1"){
+              this.toastr.show(
+                'Gostaria de renovar sua sessão por mais 1 hora?',
+                "Renovação de Sessão",{
+                  toastComponent:ToastRenewComponent,
+                  toastClass: 'toastrenew',
+                  timeOut: 5000,
+                  extendedTimeOut: 2000,
+                  closeButton:true,
+                  progressBar:true,
+                  progressAnimation: 'increasing'
+              });
+            }
           }
         }
       },

@@ -2,6 +2,8 @@ import { Component,OnInit,OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SecurityService } from '../services/security.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ToastRenewComponent } from '../toast-renew/toast-renew.component';
 
 @Component({
   selector: 'app-admin',
@@ -18,7 +20,9 @@ export class AdminComponent implements OnInit,OnDestroy{
   showMenu:boolean = false;
 
 
-  constructor(private auth:SecurityService,private myRoute:Router){
+  constructor(private auth:SecurityService,
+    private myRoute:Router,
+    private toastr:ToastrService){
 
   }
 
@@ -44,8 +48,21 @@ export class AdminComponent implements OnInit,OnDestroy{
           let dt_token = Date.parse( String(localStorage.getItem('token_expire')) );
           let now = Date.now();
           const diffTime = Math.abs(dt_token - now);
-          if(diffTime<=60000){
-            //colocar aqui o alerta de que o tempo esta acabando
+          if(diffTime<=300000){//5 minutos
+            
+            if(localStorage.getItem("message_renew")=="1"){
+              this.toastr.show(
+                'Gostaria de renovar sua sessão por mais 1 hora?',
+                "Renovação de Sessão",{
+                  toastComponent:ToastRenewComponent,
+                  toastClass: 'toastrenew',
+                  timeOut: 5000,
+                  extendedTimeOut: 2000,
+                  closeButton:true,
+                  progressBar:true,
+                  progressAnimation: 'increasing'
+              });
+            }
           }
         }
       },
