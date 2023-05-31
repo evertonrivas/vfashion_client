@@ -47,6 +47,8 @@ export interface CalendarEvent{
     budget_value:number | null,
     collection: Collection,
     children: CalendarEvent[]
+    date_created:string|null,
+    date_updated:string|null
 }
 
 export interface CalendarEventData{
