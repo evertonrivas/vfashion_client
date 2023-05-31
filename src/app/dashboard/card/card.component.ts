@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Input } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent {
+  @Input() isMoney:boolean   = false;
+  @Input() isNumber:boolean  = false;
+  @Input() value:number      = 0;
+  @Input() icon:string|null  = null;
+  @Input() title:string|null = null;
+  @Input() subtitle:string|null=null;
 
+  constructor(){
+
+  }
 }
