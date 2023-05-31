@@ -1,0 +1,27 @@
+<div class="row toastStyle" [style.display]="state.value === 'inactive' ? 'none' : ''">
+    <div class="col-md text">
+        <button *ngIf="options.closeButton" (click)="remove()" type="button" class="toast-close-button" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        <div *ngIf="title" [class]="options.titleClass" [attr.aria-label]="title">
+        {{ title }}
+      </div>
+      <div *ngIf="message && options.enableHtml" role="alert"
+        [class]="options.messageClass" [innerHTML]="message">
+      </div>
+      <div *ngIf="message && !options.enableHtml" role="alert"
+        [class]="options.messageClass" [attr.aria-label]="message">
+        {{ message }}
+      </div>
+      <div class="text-center">
+        <a href="javascript:void(0);" (click)="renewSession()" class="link-light pe-4">Sim</a>
+        <a href="javascript:void(0);" (click)="dontRenew()" class="link-light">N&atilde;o</a>
+      </div>
+    </div>
+    <div *ngIf="options.progressBar" class="baseStyle">
+        <div class="toast-progress" [style.width]="width + '%'"></div>
+    </div>
+</div>
+
+
+
