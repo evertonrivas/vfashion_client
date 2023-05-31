@@ -40,6 +40,7 @@ import { ToastRenewComponent } from './toast-renew/toast-renew.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
+      preventDuplicates:true,
       positionClass: 'toast-bottom-right',
       timeOut: 2000
     }),
