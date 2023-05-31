@@ -1,0 +1,32 @@
+<div id="mainContent">
+    <header class="header d-flex display-content-start" id="header">
+      <div class="header_toggle">
+        <!-- <a href="#" [routerLink]="['/calendar/dashboard']" [queryParams]="{module:'calendar'}" class="text-light pe-4">
+        <span class="material-symbols-outlined align-middle">
+          dashboard
+          </span><small>Dashboard</small>
+        </a>
+        <a href="#" [routerLink]="['/calendar/chart']" class="text-light pe-4">
+          <span class="material-symbols-outlined align-middle">
+            calendar_month
+          </span><small>Calendário</small>
+        </a> -->
+      </div>
+      <div class="flex-shrink-0 dropdown" style="max-width: 40px!important;">
+        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/evertonrivas.png" alt="Everton Rivas" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+          <li><a class="dropdown-item" [routerLink]="['/crm/profile']"><span class="material-symbols-outlined align-middle">&#xe853;</span> Perfil</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/selector']"><span class="material-symbols-outlined align-middle">deployed_code</span> Trocar módulo</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a href="javascript:void(0);" class="dropdown-item" (click)="logout()"><span class="material-symbols-outlined">&#xe9ba;</span> Sair</a></li>
+        </ul>
+      </div>
+  </header>
+       <!--Container Main start-->
+      <div id="routerContainer">
+          <router-outlet></router-outlet>
+      </div>
+      <!--Container Main end-->
+    </div>
