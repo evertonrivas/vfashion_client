@@ -1,10 +1,17 @@
-import { Subscription } from "rxjs";
+import { Subscription, filter } from "rxjs";
 import { Checkbox } from "./models/checkbox.model";
 import { Paginate } from "./models/paginate.model";
+import * as Papa from 'papaparse';
 
 export interface Response{
     pagination: Paginate,
     data: any
+}
+
+export enum FileType {
+    JSON = 0,
+    CSV = 1,
+    STR = 2
 }
 
 export class DataManipulation{
@@ -91,29 +98,37 @@ export class DataManipulation{
         }
     }
 
-    _json_to_csv():string{
-        return "";
-    }
-
-    exportFile(data:any, type:string = "J"):void{
+    /**
+     * 
+     * @param data 
+     * @param type J = JSON, C = JSON to CSV, S = String IN CSV Format
+     */
+    exportFile(data:any, type:FileType = FileType.JSON):void{
         const link = document.createElement("a");
 
-        if (type=="C"){
+        if (type==FileType.CSV){
             const string = JSON.stringify(data);
             const json = JSON.parse(string);
-            const blob = new Blob([json],{type: 'application/csv;charset=utf-8'});
+            const csvString = Papa.unparse(json,{delimiter:';'});
+            const blob = new Blob([csvString],{type: 'application/csv;charset=utf-8'});
             const url = URL.createObjectURL(blob);
             
             link.href  = url;
             link.download = "data.csv";
         }
-        else{
+        else if(type==FileType.JSON){
             let theJSON = JSON.stringify(data);
             const blob = new Blob([theJSON],{type: 'application/json;charset=utf-8'});
             const url = URL.createObjectURL(blob);
 
             link.href = url;
             link.download = 'data.json';
+        }else if(type==FileType.STR){
+            const blob = new Blob([data],{type: 'application/csv;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+
+            link.href = url;
+            link.download = "data.csv";
         }
 
         document.body.appendChild(link);
