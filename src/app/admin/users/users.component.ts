@@ -1,5 +1,5 @@
 import { Component,AfterViewInit, OnInit, OnDestroy } from '@angular/core';
-import { DataManipulation } from 'src/app/datamanipulation';
+import { DataManipulation, FileType } from 'src/app/datamanipulation';
 import { User, UserOptions } from 'src/app/models/user.model';
 import { ProfileService } from 'src/app/services/profile.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -119,11 +119,11 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
         pagSize: 0,
         search: ""
       }).subscribe((data) =>{
-        this.exportFile(data,"C");
+        this.exportFile(data,FileType.CSV);
       });
     }else{
       this.serviceSub[1] = this.svc.userList(this.options).subscribe((data) =>{
-        this.exportFile(data.data,"C");
+        this.exportFile(data.data,FileType.CSV);
       });
     }
   }
@@ -138,11 +138,11 @@ export class UsersComponent extends DataManipulation implements AfterViewInit, O
         pagSize: 0,
         search: ""
       }).subscribe((data)=>{
-        this.exportFile(data,"J");
+        this.exportFile(data,FileType.JSON);
       });
     }else{
       this.serviceSub[2] = this.svc.userList(this.options).subscribe((data)=>{
-        this.exportFile(data.data,"J");
+        this.exportFile(data.data,FileType.JSON);
       });
     }
     
