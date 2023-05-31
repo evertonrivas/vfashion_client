@@ -1,8 +1,10 @@
+import { FormatType } from "../dashboard/card/card.component";
+
 export interface Card {
+    dataType:FormatType,
+    icon:string|null,
     title:string|null,
     subtitle:string|null,
-    icon:string|null,
-    isMoney:boolean,
-    isNumber:boolean,
+    text:string|null
     value:number
 }
