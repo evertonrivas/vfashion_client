@@ -20,12 +20,12 @@
                 <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Novo Marco" (click)="onNewMilestone()">
                     <span class="material-symbols-outlined align-middle icon-small">flag_circle</span>
                 </button>
-                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Excluir Selecionado(s)">
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Excluir Selecionado(s)" (click)="onDeleteMassive()">
                     <span class="material-symbols-outlined align-middle icon-small">delete</span>
                 </button>
                 <div class="btn-group btn-group-sm" role="group" data-bs-toggle="tooltip" title="Exportar">
                     <button type="button" class="btn btn-outline-secondary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="material-symbols-outlined icon-small">download</span>
+                        <span class="material-symbols-outlined align-middle icon-small">download</span>
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="javascript:void(0);" (click)="exportCSV()">CSV</a></li>
@@ -178,7 +178,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Confirmação de execução</h5>
+            <span class="material-symbols-outlined align-middle text-danger">
+                error
+                </span> <h5 class="modal-title">Confirmação de execução</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -186,7 +188,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-            <!-- <button type="button" class="btn btn-primary" (click)="onChangeMassive()">Sim</button> -->
+            <button type="button" class="btn btn-primary" (click)="onExecuteDelete()">Sim</button>
         </div>
         </div>
     </div>

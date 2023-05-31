@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy, AfterViewInit,ViewEncapsulation,ElementRef, ViewChild } from '@angular/core';
-import { DataManipulation } from 'src/app/datamanipulation';
+import { DataManipulation, FileType } from 'src/app/datamanipulation';
 import { Calendar, CalendarEvent, CalendarOptions } from 'src/app/models/calendar.model';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { IMyDateModel,IAngularMyDpOptions } from 'trade-datepicker/public-api';
+import { ToastrService } from 'ngx-toastr';
 
 declare var window:any;
 
@@ -56,7 +57,8 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   milestones:CalendarEvent[] = [];
   totalEventsDisplay:number = 0;
 
-  constructor(private svc:CalendarService){
+  constructor(private svc:CalendarService,
+    private toastr:ToastrService){
     super()
   }
 
@@ -104,6 +106,9 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
     this.eventsCalendar = [];
     this.registryChecked = [];
     this.milestones = [];
+    this.hasSend = this.hasSendDelete = this.masterChecked = false;
+    this.totalChecked = 0;
+    this.registryChecked = [];
 
     //realiza carga das informacoes do calendario (datas)
     this.serviceSub[0] = this.svc.calendarLoad(this.options).subscribe({
@@ -157,13 +162,45 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   }
 
   exportCSV():void{
-    let data = "";
-    this.exportFile(data,"C");
+    let header:string[] = ['id','name','type','budget_value','collection','start_date','end_date','date_created','date_updated'];
+    let body:string[] = [];
+    let data:string = "";
+
+    //jah monta o header de largada
+    data = header.join(";")+"\n";
+
+    this.eventsCalendar.forEach((evt) =>{
+      body = [];
+      body.push(evt.id.toString());
+      body.push(evt.name);
+      body.push(evt.type.name as string);
+      body.push((evt.budget_value==null?'':String(evt.budget_value)));
+      body.push(evt.collection.name);
+      body.push(evt.start_date);
+      body.push(evt.end_date);
+      body.push(evt.date_created==null?'':String(evt.date_created));
+      body.push(evt.date_updated==null?'':String(evt.date_updated));
+      data += body.join(";")+"\n";
+      evt.children.forEach((c) =>{
+        body = [];
+        body.push(c.id.toString());
+        body.push(c.name);
+        body.push(c.type.name as string);
+        body.push((c.budget_value==null?'':String(c.budget_value)));
+        body.push(c.collection.name);
+        body.push(c.start_date);
+        body.push(c.end_date);
+        body.push(c.date_created==null?'':String(c.date_created));
+        body.push(c.date_updated==null?'':String(c.date_updated));
+        data += body.join(";")+"\n"; 
+      });
+    });
+
+    this.exportFile(data,FileType.STR);
   }
 
   exportJSON():void{
-    let data = "";
-    this.exportFile(data,"J");
+    this.exportFile(this.eventsCalendar,FileType.JSON);
   }
 
   onNewEvent():void{
@@ -218,5 +255,50 @@ export class GanttComponent extends DataManipulation implements OnInit, OnDestro
   formatEventDate(date:string):string{
     let d = date.split("-");
     return d[2]+"/"+d[1];
+  }
+
+  onDeleteMassive():void{
+    Object.keys(this.registryChecked).forEach((k)=>{
+      if (this.registryChecked[parseInt(k)]==true){
+        this.totalChecked++;
+      }
+    });
+
+    if (this.totalChecked==1){
+      this.message = 'Deseja realmente excluir o registro selecionado?';
+    }else{
+      this.message = 'Deseja realmente excluir todos os registros selecionados?';
+    }
+    if (this.totalChecked > 0 ){
+      this.modal.show();
+    }
+    else{
+      this.toastr.warning('Selecione ao menos um registro para alterar!');
+    }
+  }
+
+  onExecuteDelete():void{
+    let regsToDelete:number[] = [];
+    this.hasSendDelete = true;
+
+    Object.keys(this.registryChecked).forEach((k)=>{
+      if(this.registryChecked[parseInt(k)]==true){
+        regsToDelete.push(parseInt(k));
+      }
+    });
+
+    this.svc.calendarEventDelete(regsToDelete).subscribe({
+      next: (data) =>{
+        if(data){
+          this.toastr.success('Registro(s) excluído(s) com sucesso!');
+        }else{
+          this.toastr.error('Não foi possível excluir o(s) registro(s)!');
+        }
+      },
+      complete: () =>{
+        this.modal.hide();
+        this.loadData();
+      }
+    });
   }
 }
