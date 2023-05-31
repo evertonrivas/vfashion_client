@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as configData from 'src/assets/config.json';
-import { MyHttp } from './my-http';
+import { ContentType, MyHttp } from './my-http';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,16 @@ export class SecurityService extends MyHttp{
   checkLogged():Observable<boolean>{
     var frmData = new FormData();
     frmData.append("token",localStorage.getItem('token_access') as string);
-    return this.http.post<boolean>(this.sys_config.backend_cmm+"/users/auth-check",frmData);
+    return this.http.put<boolean>(this.sys_config.backend_cmm+"/users/auth",frmData,{
+      headers: this.getHeaderPost(ContentType.form)
+    });
+  }
+
+  renewSession():Observable<any>{
+    return this.http.get<any>(this.sys_config.backend_cmm+'/users/auth',{
+      headers: this.getHeader(),
+      params: new HttpParams().set("id",localStorage.getItem("id_user") as string)
+    });
   }
 
   logoff():Observable<any>{
