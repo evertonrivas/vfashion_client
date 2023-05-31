@@ -1,8 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CrmComponent } from './crm.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
-const routes: Routes = [{ path: '', component: CrmComponent }];
+const routes: Routes = [{ 
+  path: '', 
+  component: CrmComponent,
+  children:[{
+    path: 'dashboard',
+    component: DashboardComponent
+  }]
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
